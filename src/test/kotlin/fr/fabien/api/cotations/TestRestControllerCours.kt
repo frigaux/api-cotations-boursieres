@@ -1,0 +1,48 @@
+package fr.fabien.api.cotations
+
+import fr.fabien.jpa.cotations.repository.RepositoryCours
+import fr.fabien.jpa.cotations.repository.RepositoryValeur
+import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class TestRestControllerCours(
+    @Autowired val mockMvc: MockMvc,
+    @Autowired private val repositoryValeur: RepositoryValeur,
+    @Autowired private val repositoryCours: RepositoryCours
+) {
+
+    @Test
+    fun `Given 1 valeur avec 2 cours when request getDernierCoursToutesValeurs then return 1 cours`() {
+        mockMvc.perform(get("/bourse/cours").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
+            .andExpect(jsonPath("$.cours").isArray())
+    }
+
+    @Test
+    fun `Given 1 valeur avec 2 cours when request getDernierCoursPourUneValeur then return 1 cours`() {
+        mockMvc.perform(get("/bourse/cours/GLE").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
+    }
+
+    @Test
+    fun `Given 1 valeur avec 2 cours when request getDerniersCoursPourUneValeur then return 2 cours`() {
+        mockMvc.perform(get("/bourse/cours/GLE/2").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$").isArray())
+    }
+}
