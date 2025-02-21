@@ -14,7 +14,7 @@ class TestConfiguration(@Autowired private val repositoryValeur: RepositoryValeu
                         @Autowired private val repositoryCours: RepositoryCours
 ) {
     init {
-        var valeur: Valeur = Valeur("GLE", Marche.EURO_LIST_A, "Societe Generale", setOf())
+        val valeur: Valeur = Valeur("GLE", Marche.EURO_LIST_A, "Societe Generale", setOf())
         repositoryValeur.save(valeur)
 
         repositoryCours.save(
