@@ -28,11 +28,18 @@ class TestRestControllerCours(
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
             .andExpect(jsonPath("$.cours").isArray())
+            .andExpect(jsonPath("$.cours.length()").value(1))
+    }
+
+    @Test
+    fun `Given 1 valeur avec 2 cours when request getDernierCoursPourUneValeur NIMP then 404`() {
+        mockMvc.perform(get("/bourse/cours/NIMP").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound)
     }
 
     @Test
     fun `Given 1 valeur avec 2 cours when request getDernierCoursPourUneValeur then return 1 cours`() {
-        mockMvc.perform(get("/bourse/cours/GLE").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/bourse/cours/${TestConfiguration.TICKER}").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
@@ -40,9 +47,10 @@ class TestRestControllerCours(
 
     @Test
     fun `Given 1 valeur avec 2 cours when request getDerniersCoursPourUneValeur then return 2 cours`() {
-        mockMvc.perform(get("/bourse/cours/GLE/2").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/bourse/cours/${TestConfiguration.TICKER}/2").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$.length()").value(2))
     }
 }

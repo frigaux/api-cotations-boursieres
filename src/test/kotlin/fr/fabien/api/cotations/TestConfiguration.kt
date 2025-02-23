@@ -13,8 +13,11 @@ import java.time.LocalDate
 class TestConfiguration(@Autowired private val repositoryValeur: RepositoryValeur,
                         @Autowired private val repositoryCours: RepositoryCours
 ) {
+    companion object {
+        val TICKER = "GLE"
+    }
     init {
-        val valeur: Valeur = Valeur("GLE", Marche.EURO_LIST_A, "Societe Generale", setOf())
+        val valeur: Valeur = Valeur(TICKER, Marche.EURO_LIST_A, "Societe Generale", setOf())
         repositoryValeur.save(valeur)
 
         repositoryCours.save(

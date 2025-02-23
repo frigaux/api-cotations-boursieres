@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class ClientErrorExceptionHandler {
     @ExceptionHandler(ClientErrorException::class)
-    fun handle(e: ClientErrorException): ResponseEntity<ClientError> {
+    private fun handle(e: ClientErrorException): ResponseEntity<ClientError> {
         return ResponseEntity<ClientError>(
             ClientError(e.message?: e.httpStatus.name),
             e.httpStatus

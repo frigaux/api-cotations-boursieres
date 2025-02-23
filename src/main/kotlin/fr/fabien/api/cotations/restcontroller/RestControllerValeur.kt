@@ -16,14 +16,14 @@ import kotlin.jvm.optionals.getOrNull
 class RestControllerValeur(private val repositoryValeur: RepositoryValeur) {
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getValeurs(): List<DtoValeur> {
+    private fun getValeurs(): List<DtoValeur> {
         return repositoryValeur.findAll()
             .map { valeur -> DtoValeur(valeur.ticker, valeur.marche, valeur.libelle) }
     }
 
-    @GetMapping(value = ["{id}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getValeur(@PathVariable id: Int): DtoValeur {
-        return repositoryValeur.findById(id).getOrNull()
+    @GetMapping(value = ["{ticker}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    private fun getValeur(@PathVariable ticker: String): DtoValeur {
+        return repositoryValeur.findByTicker(ticker)
             ?.let { valeur -> DtoValeur(valeur.ticker, valeur.marche, valeur.libelle) }
             ?: run { throw NotFoundException() }
     }

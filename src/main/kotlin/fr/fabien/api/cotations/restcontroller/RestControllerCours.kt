@@ -3,6 +3,7 @@ package fr.fabien.api.cotations.restcontroller
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
+import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
 import fr.fabien.jpa.cotations.entity.Cours
 import fr.fabien.jpa.cotations.entity.Valeur
 import fr.fabien.jpa.cotations.repository.RepositoryCours
@@ -22,7 +23,7 @@ class RestControllerCours(
 ) {
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getDernierCoursToutesValeurs(): DtoDctvWrapper {
+    private fun getDernierCoursToutesValeurs(): DtoDctvWrapper {
         val valeurs: List<Valeur> = repositoryValeur.queryJoinLastCours()
         val date: String = valeurs.get(0)
             .cours.elementAt(0)
@@ -40,9 +41,9 @@ class RestControllerCours(
     }
 
     @GetMapping(value = ["{ticker}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getDernierCoursPourUneValeur(@PathVariable ticker: String): DtoDcpuvCours {
+    private fun getDernierCoursPourUneValeur(@PathVariable ticker: String): DtoDcpuvCours {
         return repositoryCours.queryLastByTicker(ticker)
-            .let {
+            ?.let {
                 DtoDcpuvCours(
                     it.date.format(DateTimeFormatter.ISO_LOCAL_DATE),
                     it.ouverture, it.plusHaut,
@@ -50,10 +51,11 @@ class RestControllerCours(
                     it.moyennesMobiles, it.alerte
                 )
             }
+            ?: run { throw NotFoundException() }
     }
 
     @GetMapping(value = ["{ticker}/{limit}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun getDerniersCoursPourUneValeur(@PathVariable ticker: String, @PathVariable limit: Int): List<DtoDcpuvCours> {
+    private fun getDerniersCoursPourUneValeur(@PathVariable ticker: String, @PathVariable limit: Int): List<DtoDcpuvCours> {
         return repositoryCours.queryLatestByTicker(ticker, limit)
             .map {
                 cours ->
