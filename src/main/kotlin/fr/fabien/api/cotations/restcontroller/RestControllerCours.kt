@@ -3,11 +3,20 @@ package fr.fabien.api.cotations.restcontroller
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
+import fr.fabien.api.cotations.restcontroller.exception.ClientError
 import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
 import fr.fabien.jpa.cotations.entity.Cours
 import fr.fabien.jpa.cotations.entity.Valeur
 import fr.fabien.jpa.cotations.repository.RepositoryCours
 import fr.fabien.jpa.cotations.repository.RepositoryValeur
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.constraints.Size
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.format.DateTimeFormatter
 
+@Tag(name = "API des cours")
 @RestController
 @RequestMapping("bourse/cours")
 class RestControllerCours(
@@ -22,10 +32,22 @@ class RestControllerCours(
     private val repositoryCours: RepositoryCours
 ) {
 
+    @Operation(summary = "Récupération des valeurs au dernier cours")
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "Les cours",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = DtoDctvWrapper::class)
+                )]
+            )
+        ]
+    )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getDernierCoursToutesValeurs(): DtoDctvWrapper {
         val valeurs: List<Valeur> = repositoryValeur.queryJoinLastCours()
-        val date: String = valeurs.get(0)
+        val date: String = valeurs.get(0) // assertion cannot raise IndexOutOfBoundsException
             .cours.elementAt(0)
             .date.format(DateTimeFormatter.ISO_LOCAL_DATE)
         return DtoDctvWrapper(
@@ -40,8 +62,31 @@ class RestControllerCours(
             })
     }
 
+
+    @Operation(summary = "Récupère le dernier cours pour une valeur identifiée par son ticker")
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "Le cours",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = DtoDcpuvCours::class)
+                )]
+            ),
+            ApiResponse(
+                responseCode = "404", description = "Ticker introuvable",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = ClientError::class)
+                )]
+            )
+        ]
+    )
     @GetMapping(value = ["{ticker}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    private fun getDernierCoursPourUneValeur(@PathVariable ticker: String): DtoDcpuvCours {
+    private fun getDernierCoursPourUneValeur(
+        @Parameter(description = "ticker identifiant la valeur", required = true, example = "GLE")
+        @PathVariable ticker: String
+    ): DtoDcpuvCours {
         return repositoryCours.queryLastByTicker(ticker)
             ?.let {
                 DtoDcpuvCours(
@@ -54,11 +99,28 @@ class RestControllerCours(
             ?: run { throw NotFoundException() }
     }
 
+    @Operation(summary = "Récupération des cours d'une valeur")
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200", description = "Les cours",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = DtoDcpuvCours::class)
+                )]
+            )
+        ]
+    )
     @GetMapping(value = ["{ticker}/{limit}"], produces = [MediaType.APPLICATION_JSON_VALUE])
-    private fun getDerniersCoursPourUneValeur(@PathVariable ticker: String, @PathVariable limit: Int): List<DtoDcpuvCours> {
-        return repositoryCours.queryLatestByTicker(ticker, limit)
-            .map {
-                cours ->
+    private fun getDerniersCoursPourUneValeur(
+        @Parameter(description = "ticker identifiant la valeur", required = true, example = "GLE")
+        @PathVariable ticker: String,
+        @Parameter(description = "nombre maximum de cours à récupérer", required = true, example = "30")
+        @Size(min = 1, max = 200)
+        @PathVariable limit: Int
+    ): List<DtoDcpuvCours> {
+        return repositoryCours.queryLatestByTicker(ticker, limit.coerceAtMost(200))
+            .map { cours ->
                 DtoDcpuvCours(
                     cours.date.format(DateTimeFormatter.ISO_LOCAL_DATE),
                     cours.ouverture, cours.plusHaut,
