@@ -16,7 +16,8 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
-import jakarta.validation.constraints.Size
+import jakarta.validation.constraints.Max
+import jakarta.validation.constraints.Min
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -116,7 +117,8 @@ class RestControllerCours(
         @Parameter(description = "ticker identifiant la valeur", required = true, example = "GLE")
         @PathVariable ticker: String,
         @Parameter(description = "nombre maximum de cours à récupérer", required = true, example = "30")
-        @Size(min = 1, max = 200)
+        @Min(1)
+        @Max(200)
         @PathVariable limit: Int
     ): List<DtoDcpuvCours> {
         return repositoryCours.queryLatestByTicker(ticker, limit.coerceAtMost(200))
