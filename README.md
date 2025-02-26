@@ -6,14 +6,15 @@
 
 # Spring Boot : authentification OAuth2 avec GitHub
 [Spring Boot : OAuth avec GitHub](https://spring.io/guides/tutorials/spring-boot-oauth2)
+
 [GitHub : OAuth](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
 
 ## Enregistrement de la nouvelle application OAuth sur GitHub
 [Enregistrement d'une application sur GitHub](https://github.com/settings/applications/new)
 ```mermaid
   sequenceDiagram
-    Developer->>GitHub: nom et description de l'application, url de la page d'accueil, url de retour après une authentification réussie
-    GitHub->>Developer: "client ID" et "client secret" de la nouvelle application
+    Développeur->>GitHub: nom et description de la nouvelle application, url de la page d'accueil, url de retour après une authentification réussie
+    GitHub->>Développeur: "client ID" et "client secret" de l'application crée
 ```
 
 ## Scénario d'authentification auprès de GitHub par SpringBoot
@@ -28,5 +29,5 @@
     Navigateur->>SpringBoot: envoie la requête avec le code temporaire
     SpringBoot->>GitHub: récupèration d'un "access token" avec le code temporaire
     SpringBoot->>GitHub: utilisation de l'"access token" pour appeler l'API GitHub, notamment la récupération du profil de l'utilisateur authentifié afin de le stocker en session
-    SpringBoot->>Navigateur: affiche la page d'acceuil avec les informations utilisateurs contenues en session (nom et prénom en général)
+    SpringBoot->>Navigateur: affiche la page d'acceuil en lui joignant le cookie JSESSIONID (les pages peuvent desormais afficher les informations utilisateur via la session)
 ```
