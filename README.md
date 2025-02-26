@@ -27,7 +27,7 @@
     Utilisateur->>GitHub: s'authentifie avec succès
     GitHub->>Navigateur: redirige vers l'url de retour avec un "code temporaire"
     Navigateur->>SpringBoot: envoie la requête avec le "code temporaire"
-    SpringBoot->>GitHub: récupèration d'un "access token" avec le "code temporaire"
+    SpringBoot->>GitHub: récupèration d'un "access token" avec le "code temporaire" + le "client ID" et "client secret" de l'application
     GitHub->>SpringBoot: "access token"
     SpringBoot->>GitHub: utilisation de l'"access token" pour appeler l'API GitHub, notamment la récupération du profil de l'utilisateur authentifié afin de le stocker en session
     GitHub->>SpringBoot: profil de l'utilisateur authentifié
