@@ -25,9 +25,11 @@
     SpringBoot->>Navigateur: session inexistante, redirige le navigateur vers la page d'authentification de GitHub avec le "client id" identifiant l'application
     Navigateur->>Utilisateur: affiche la page d'authentification de GitHub
     Utilisateur->>GitHub: s'authentifie avec succès
-    GitHub->>Navigateur: redirige vers l'url de retour avec un code temporaire
-    Navigateur->>SpringBoot: envoie la requête avec le code temporaire
-    SpringBoot->>GitHub: récupèration d'un "access token" avec le code temporaire
+    GitHub->>Navigateur: redirige vers l'url de retour avec un "code temporaire"
+    Navigateur->>SpringBoot: envoie la requête avec le "code temporaire"
+    SpringBoot->>GitHub: récupèration d'un "access token" avec le "code temporaire"
+    GitHub->>SpringBoot: "access token"
     SpringBoot->>GitHub: utilisation de l'"access token" pour appeler l'API GitHub, notamment la récupération du profil de l'utilisateur authentifié afin de le stocker en session
+    GitHub->>SpringBoot: profil de l'utilisateur authentifié
     SpringBoot->>Navigateur: affiche la page d'acceuil en lui joignant le cookie JSESSIONID (les pages peuvent desormais afficher les informations utilisateur via la session)
 ```
