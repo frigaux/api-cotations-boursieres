@@ -4,7 +4,7 @@
 - dépendance JPA
 - mysql 8.0.36 + H2 2.3.232 (tests)
 
-# Spring Boot : authentification OAuth2 avec GitHub
+# Spring Boot : authentification OAuth2 avec GitHub (pas mis en place)
 [Spring Boot : OAuth avec GitHub](https://spring.io/guides/tutorials/spring-boot-oauth2)
 
 [GitHub : OAuth](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps)
@@ -31,5 +31,5 @@
     GitHub->>SpringBoot: "access token"
     SpringBoot->>GitHub: utilisation de l'"access token" pour appeler l'API GitHub, notamment la récupération du profil de l'utilisateur authentifié afin de le stocker en session
     GitHub->>SpringBoot: profil de l'utilisateur authentifié
-    SpringBoot->>Navigateur: affiche la page d'acceuil en lui joignant le cookie JSESSIONID (les pages peuvent desormais afficher les informations utilisateur via la session)
+    SpringBoot->>Navigateur: affiche la page d'acceuil en lui joignant le cookie JSESSIONID (les pages peuvent désormais afficher les informations utilisateur via la session)
 ```

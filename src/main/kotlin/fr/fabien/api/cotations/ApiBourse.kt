@@ -5,9 +5,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
-// TODO : tests
-// TODO : swagger
-// TODO : JWT with anonymous
+// TODO : resource JWT, ProviderManager, JwtAuthenticationProvider, JWTAthenticationConverter, JwtDecoder, Swagger
+// TODO : properties -> YAML
 @SpringBootApplication
 @EntityScan("fr.fabien")
 @EnableJpaRepositories("fr.fabien")
