@@ -6,7 +6,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 // TODO : resource JWT, ProviderManager, JwtAuthenticationProvider, JWTAthenticationConverter, JwtDecoder, Swagger
-// TODO : properties -> YAML
 @SpringBootApplication
 @EntityScan("fr.fabien")
 @EnableJpaRepositories("fr.fabien")

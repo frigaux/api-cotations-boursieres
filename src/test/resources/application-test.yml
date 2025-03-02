@@ -1,0 +1,17 @@
+logging:
+  config: "classpath:logback-test.xml"
+
+spring:
+  batch:
+    job:
+      enabled: false
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  secret: SxQXq1naSho2jBsrnl/JTRHbV9Js13ujbdp3ZVO7gq5UC+IjY9hsXZOXhbcdpuEu0S+OX9nE2xDocRslU1nzpg==
+  expiration:
+    seconds: 86400
