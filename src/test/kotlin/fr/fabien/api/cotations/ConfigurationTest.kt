@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 import java.time.LocalDate
 
 @Configuration
-class TestConfiguration(@Autowired private val repositoryValeur: RepositoryValeur,
+class ConfigurationTest(@Autowired private val repositoryValeur: RepositoryValeur,
                         @Autowired private val repositoryCours: RepositoryCours
 ) {
     companion object {
