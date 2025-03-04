@@ -38,6 +38,7 @@ spring:
 
 # Pour la construction du JsonWebToken
 jwt:
-  secret: SxQXq1naSho2jBsrnl/JTRHbV9Js13ujbdp3ZVO7gq5UC+IjY9hsXZOXhbcdpuEu0S+OX9nE2xDocRslU1nzpg==
-  expiration:
+  key: Ep-zuUl8NTCIbXTYe4UwzToIohllkdlohrMDOvmSpQ18Y-6otlV8ndRSpv8wNLbOXM_bXPMWNt9eao7UaJ7hXA
+  algorithm: HS512
+  expiresIn:
     seconds: 86400

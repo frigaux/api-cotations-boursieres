@@ -6,8 +6,8 @@ import jakarta.validation.constraints.Size
 
 @Schema(description = "JsonWebToken.")
 data class DtoJWTWrapper(
-    @field:Schema(description = "le JWT", example = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbm9ueW1vdXMiLCJpYXQiOjE3NDA5Mjk5MDgsImV4cCI6MTc0MDkyOTk5NX0.7Oo-fu1Q3xlnxhZ842Hb6q26osJRNk0pKRYIKajifTSp2Vs4AncFCXFO-vmO77nh_Ds8YPrHaxkCm0lua1UJiQ", required = true)
-    @NotBlank
-    @Size(max = 5000)
+    @field:Schema(description = "le JWT", example = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3NDExMDkwNzQsImlhdCI6MTc0MTEwODk4OCwiaWRlbnRpZmlhbnQiOiJhbm9ueW1vdXMifQ.8gFpQthr2G0Y_OtZRJ8awL0LRpIDADGBlqpgVwIqvb_b81VCVAdxHnwH1_bE9KtNmEiWZ0xgEzPteZ-HUnNRtA", required = true)
+    @field:NotBlank
+    @field:Size(max = 5000)
     val jwt: String
 )

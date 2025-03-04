@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.validation.Valid
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -34,7 +35,7 @@ class RestControllerAuthentification(
         ]
     )
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    private fun makeJWT(@RequestBody dtoAuthentification: DtoAuthentification): DtoJWTWrapper {
+    private fun generateJwtToken(@Valid @RequestBody dtoAuthentification: DtoAuthentification): DtoJWTWrapper {
         return DtoJWTWrapper(serviceJWT.generateJwtToken(dtoAuthentification))
     }
 }

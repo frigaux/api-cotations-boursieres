@@ -1,12 +1,16 @@
 package fr.fabien.api.cotations
 
-import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.io.Encoders
-import javax.crypto.SecretKey
+import com.nimbusds.jose.JWSAlgorithm
+import com.nimbusds.jose.jwk.gen.OctetSequenceKeyGenerator
+import java.util.*
+
 
 class GenerateurHS512 {}
 
 fun main() {
-    val key: SecretKey = Jwts.SIG.HS512.key().build()
-    println(Encoders.BASE64.encode(key.encoded))
+    val jwk = OctetSequenceKeyGenerator(512).keyID(UUID.randomUUID().toString()) // give the key some ID (optional)
+        .algorithm(JWSAlgorithm.HS512) // indicate the intended key alg (optional)
+        .issueTime(Date()) // issued-at timestamp (optional)
+        .generate()
+    println(jwk)
 }

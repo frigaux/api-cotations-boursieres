@@ -13,8 +13,8 @@ logging:
 business:
   datasource:
     url: jdbc:mysql://localhost:3306/cotations
-    username: fabien
-    password: JK5d6H!l
+    username: ${APP_DATASOURCE_USERNAME}
+    password: ${APP_DATASOURCE_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     max-total: 30
     configuration:
@@ -42,6 +42,8 @@ spring:
 
 # Pour la construction du JsonWebToken
 jwt:
-  secret: SxQXq1naSho2jBsrnl/JTRHbV9Js13ujbdp3ZVO7gq5UC+IjY9hsXZOXhbcdpuEu0S+OX9nE2xDocRslU1nzpg==
-  expiration:
+  key: ${APP_JWT_SECRET}
+  algorithm: HS512
+  expiresIn:
     seconds: 86400
+

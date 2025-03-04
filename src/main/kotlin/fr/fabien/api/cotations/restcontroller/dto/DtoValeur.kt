@@ -10,13 +10,13 @@ import jakarta.validation.constraints.Size
 data class DtoValeur(
     @field:Schema(description = "le ticker", example = "GLE", required = true, pattern = "[A-Z0-9]{1,5}")
     @NotBlank
-    @Size(max = 5)
+    @field:Size(max = 5)
     val ticker: String,
     @field:Schema(description = "le marché", example = "EURO_LIST_A", required = true)
     @NotNull
     val marche: Marche,
     @field:Schema(description = "le libellé", example = "Societe Generale", required = true)
     @NotBlank
-    @Size(max = 100)
+    @field:Size(max = 100)
     val libelle: String
 )

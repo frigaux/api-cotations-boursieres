@@ -11,9 +11,9 @@ data class DtoDctvWrapper(
         description = "la date du dernier cours", example = "2025-02-21", required = true,
         format = "date", pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}"
     )
-    @NotBlank
+    @field:NotBlank
     val date: String,
     @field:ArraySchema(schema = Schema(implementation = DtoDctvCours::class), minItems = 1)
-    @NotEmpty
+    @field:NotEmpty
     val cours: List<DtoDctvCours>
 )
