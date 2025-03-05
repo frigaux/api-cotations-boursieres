@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import org.springframework.http.MediaType
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -46,7 +47,7 @@ class RestControllerCours(
         ]
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    private fun getDernierCoursToutesValeurs(): DtoDctvWrapper {
+    private fun getDernierCoursToutesValeurs(authentication: Authentication): DtoDctvWrapper {
         val valeurs: List<Valeur> = repositoryValeur.queryJoinLastCours()
         val date: String = valeurs.get(0) // assertion cannot raise IndexOutOfBoundsException
             .cours.elementAt(0)
@@ -85,6 +86,7 @@ class RestControllerCours(
     )
     @GetMapping(value = ["{ticker}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getDernierCoursPourUneValeur(
+        authentication: Authentication,
         @Parameter(description = "ticker identifiant la valeur", required = true, example = "GLE")
         @PathVariable ticker: String
     ): DtoDcpuvCours {
@@ -114,6 +116,7 @@ class RestControllerCours(
     )
     @GetMapping(value = ["{ticker}/{limit}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getDerniersCoursPourUneValeur(
+        authentication: Authentication,
         @Parameter(description = "ticker identifiant la valeur", required = true, example = "GLE")
         @PathVariable ticker: String,
         @Parameter(description = "nombre maximum de cours à récupérer", required = true, example = "30")

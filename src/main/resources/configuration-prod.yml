@@ -45,5 +45,5 @@ jwt:
   key: ${APP_JWT_SECRET}
   algorithm: HS512
   expiresIn:
-    seconds: 86400
+    milliseconds: 86400000
 

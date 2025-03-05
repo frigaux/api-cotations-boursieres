@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -36,7 +37,7 @@ class RestControllerValeur(private val repositoryValeur: RepositoryValeur) {
         ]
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    private fun getValeurs(): List<DtoValeur> {
+    private fun getValeurs(authentication: Authentication): List<DtoValeur> {
         return repositoryValeur.findAll()
             .map { valeur -> DtoValeur(valeur.ticker, valeur.marche, valeur.libelle) }
     }
@@ -62,6 +63,7 @@ class RestControllerValeur(private val repositoryValeur: RepositoryValeur) {
     )
     @GetMapping(value = ["{ticker}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getValeur(
+        authentication: Authentication,
         @Parameter(description = "ticker identifiant la valeur", required = true, example = "GLE")
         @PathVariable ticker: String
     ): DtoValeur {

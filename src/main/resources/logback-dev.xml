@@ -3,8 +3,9 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="CONSOLE" />
     </root>
+    <logger name="org.apache.tomcat" level="INFO"/>
     <logger name="fr.fabien.api.cotations" level="INFO"/>
 </configuration>

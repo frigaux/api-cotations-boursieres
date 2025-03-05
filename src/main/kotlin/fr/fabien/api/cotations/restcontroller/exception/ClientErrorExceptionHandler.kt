@@ -19,7 +19,6 @@ class ClientErrorExceptionHandler {
         )
     }
 
-    // @Valid
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(
         MethodArgumentNotValidException::class
