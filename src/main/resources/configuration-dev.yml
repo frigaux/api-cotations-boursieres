@@ -36,9 +36,20 @@ spring:
       # - none : this value effectively turns off the DDL generation.
       ddl-auto: update
 
-# Pour la construction du JsonWebToken
+# JsonWebToken settings
 jwt:
   key: Ep-zuUl8NTCIbXTYe4UwzToIohllkdlohrMDOvmSpQ18Y-6otlV8ndRSpv8wNLbOXM_bXPMWNt9eao7UaJ7hXA
   algorithm: HS512
   expiresIn:
     milliseconds: 86400000
+
+# https://swagger.io/docs/specification/v3_0/api-host-and-base-path/
+api:
+  server:
+    url: http://localhost:8080
+    description: Serveur de développement
+
+# api version
+server:
+  servlet:
+    context-path: /v1

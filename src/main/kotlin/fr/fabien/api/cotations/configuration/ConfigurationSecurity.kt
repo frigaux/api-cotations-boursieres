@@ -1,6 +1,11 @@
 package fr.fabien.api.cotations.configuration
 
 import fr.fabien.api.cotations.service.ServiceJWT
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.info.Contact
+import io.swagger.v3.oas.annotations.info.Info
+import io.swagger.v3.oas.annotations.info.License
+import io.swagger.v3.oas.annotations.servers.Server
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.security.SecurityRequirement
@@ -18,11 +23,28 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 //@SecurityScheme(
-//    name = "Bearer Authentication",
+//    name = "JWT Bearer Authentication",
 //    type = SecuritySchemeType.HTTP,
 //    bearerFormat = "JWT",
 //    scheme = "bearer"
 //)
+@OpenAPIDefinition(
+    info = Info(
+        title = "API bourse",
+        version = "\${server.servlet.context-path}",
+        contact = Contact(
+            name = "Fabien Rigaux", email = "Fabien.Rigaux@free.fr"
+        ),
+        license = License(
+            name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0"
+        ),
+        description = "Valeurs et cours"
+    ),
+    servers = [Server(
+        url = "\${api.server.url}\${server.servlet.context-path}",
+        description = "\${api.server.description}"
+    )]
+)
 class ConfigurationSecurity(
     private val serviceJWT: ServiceJWT
 ) {
