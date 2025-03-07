@@ -24,7 +24,7 @@ import org.springframework.security.web.SecurityFilterChain
 @OpenAPIDefinition(
     info = Info(
         title = "API bourse",
-        version = "\${server.servlet.context-path}",
+        version = "\${api.server.version}",
         contact = Contact(
             name = "Fabien Rigaux", email = "Fabien.Rigaux@free.fr"
         ),
@@ -34,7 +34,7 @@ import org.springframework.security.web.SecurityFilterChain
         description = "Valeurs et cours"
     ),
     servers = [Server(
-        url = "\${api.server.url}\${server.servlet.context-path}",
+        url = "\${api.server.base-url}\${server.servlet.context-path}",
         description = "\${api.server.description}"
     )]
 )

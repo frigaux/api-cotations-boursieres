@@ -50,10 +50,11 @@ jwt:
 # https://swagger.io/docs/specification/v3_0/api-host-and-base-path/
 api:
   server:
-    url: http://xxx:8080
+    base-url: http://xxx:8080
     description: Serveur de production
+    version: 1
 
 # api version
 server:
   servlet:
-    context-path: /v1
+    context-path: /v${api.server.version}
