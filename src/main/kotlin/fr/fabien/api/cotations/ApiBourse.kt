@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
-// TODO : externaliser la configuration sensible : mdp base et secret JWT (API + aspirateur)
 @SpringBootApplication
 @EntityScan("fr.fabien")
 @EnableJpaRepositories("fr.fabien")
