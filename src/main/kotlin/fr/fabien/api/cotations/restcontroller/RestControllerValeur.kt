@@ -1,5 +1,6 @@
 package fr.fabien.api.cotations.restcontroller
 
+import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.restcontroller.dto.DtoValeur
 import fr.fabien.api.cotations.restcontroller.exception.ClientError
 import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.MediaType
 import org.springframework.security.core.Authentication
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "API des valeurs")
 @RestController
 @RequestMapping("bourse/valeurs")
+@SecurityRequirement(name = SECURITY_SCHEME_NAME)
 class RestControllerValeur(private val repositoryValeur: RepositoryValeur) {
 
     @Operation(summary = "Récupère les valeurs")

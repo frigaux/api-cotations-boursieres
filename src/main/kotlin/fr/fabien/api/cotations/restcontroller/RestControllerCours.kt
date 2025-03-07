@@ -1,5 +1,6 @@
 package fr.fabien.api.cotations.restcontroller
 
+import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
@@ -29,6 +31,7 @@ import java.time.format.DateTimeFormatter
 @Tag(name = "API des cours")
 @RestController
 @RequestMapping("bourse/cours")
+@SecurityRequirement(name = SECURITY_SCHEME_NAME)
 class RestControllerCours(
     private val repositoryValeur: RepositoryValeur,
     private val repositoryCours: RepositoryCours

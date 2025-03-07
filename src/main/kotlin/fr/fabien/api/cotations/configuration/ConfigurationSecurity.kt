@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.info.License
 import io.swagger.v3.oas.annotations.servers.Server
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
-import io.swagger.v3.oas.models.security.SecurityRequirement
 import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -22,12 +21,6 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 @EnableWebSecurity
-//@SecurityScheme(
-//    name = "JWT Bearer Authentication",
-//    type = SecuritySchemeType.HTTP,
-//    bearerFormat = "JWT",
-//    scheme = "bearer"
-//)
 @OpenAPIDefinition(
     info = Info(
         title = "API bourse",
@@ -48,6 +41,11 @@ import org.springframework.security.web.SecurityFilterChain
 class ConfigurationSecurity(
     private val serviceJWT: ServiceJWT
 ) {
+
+    companion object {
+        const val SECURITY_SCHEME_NAME: String = "JWT Bearer Authentication";
+    }
+
     @Bean
     @Profile("test")
     fun filterChainTest(http: HttpSecurity): SecurityFilterChain {
@@ -86,17 +84,12 @@ class ConfigurationSecurity(
 
     @Bean
     fun customizeOpenAPI(): OpenAPI {
-        val securitySchemeName: String = "bearerAuth";
         return OpenAPI()
-            .addSecurityItem(
-                SecurityRequirement()
-                    .addList(securitySchemeName)
-            )
             .components(
                 Components()
                     .addSecuritySchemes(
-                        securitySchemeName, SecurityScheme()
-                            .name(securitySchemeName)
+                        SECURITY_SCHEME_NAME, SecurityScheme()
+                            .name(SECURITY_SCHEME_NAME)
                             .type(SecurityScheme.Type.HTTP)
                             .scheme("bearer")
                             .bearerFormat("JWT")
