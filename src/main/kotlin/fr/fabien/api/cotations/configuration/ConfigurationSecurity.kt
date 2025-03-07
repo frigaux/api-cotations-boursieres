@@ -1,5 +1,6 @@
 package fr.fabien.api.cotations.configuration
 
+import fr.fabien.api.cotations.configuration.impl.JwtAuthenticationConverter
 import fr.fabien.api.cotations.service.ServiceJWT
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Contact

@@ -12,6 +12,17 @@ spring:
         format_sql: true
 
 jwt:
-  secret: SxQXq1naSho2jBsrnl/JTRHbV9Js13ujbdp3ZVO7gq5UC+IjY9hsXZOXhbcdpuEu0S+OX9nE2xDocRslU1nzpg==
-  expiration:
-    seconds: 86400
+  key: Ep-zuUl8NTCIbXTYe4UwzToIohllkdlohrMDOvmSpQ18Y-6otlV8ndRSpv8wNLbOXM_bXPMWNt9eao7UaJ7hXA
+  algorithm: HS512
+  expiresIn:
+    milliseconds: 86400000
+
+api:
+  server:
+    base-url: http://localhost:8080
+    description: Serveur de développement
+    version: 1
+
+server:
+  servlet:
+    context-path: /v${api.server.version}
