@@ -50,7 +50,7 @@ jwt:
 # https://swagger.io/docs/specification/v3_0/api-host-and-base-path/
 api:
   server:
-    base-url: http://xxx:8080
+    base-url: http://192.168.1.200:8080
     description: Serveur de production
     version: 1
 
