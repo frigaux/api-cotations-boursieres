@@ -8,10 +8,10 @@ logging:
 # https://docs.spring.io/spring-boot/how-to/data-access.html
 business:
   datasource:
-    url: jdbc:mysql://localhost:3306/cotations
+    url: "jdbc:mysql://localhost:3306/cotations"
     username: fabien
     password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
     max-total: 30
     configuration:
       maximum-pool-size: 30
@@ -38,7 +38,7 @@ spring:
 
 # JsonWebToken settings
 jwt:
-  key: Ep-zuUl8NTCIbXTYe4UwzToIohllkdlohrMDOvmSpQ18Y-6otlV8ndRSpv8wNLbOXM_bXPMWNt9eao7UaJ7hXA
+  key: "Ep-zuUl8NTCIbXTYe4UwzToIohllkdlohrMDOvmSpQ18Y-6otlV8ndRSpv8wNLbOXM_bXPMWNt9eao7UaJ7hXA"
   algorithm: HS512
   expiresIn:
     milliseconds: 86400000
@@ -46,11 +46,11 @@ jwt:
 # https://swagger.io/docs/specification/v3_0/api-host-and-base-path/
 api:
   server:
-    base-url: http://localhost:8080
-    description: Serveur de développement
+    base-url: "http://localhost:8080"
+    description: "Serveur de développement"
     version: 1
 
 # api version
 server:
   servlet:
-    context-path: /v${api.server.version}
+    context-path: "/v${api.server.version}"
