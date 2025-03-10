@@ -18,9 +18,7 @@ import java.time.format.DateTimeFormatter
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestRestControllerCours(
-    @Autowired val mockMvc: MockMvc,
-    @Autowired private val repositoryValeur: RepositoryValeur,
-    @Autowired private val repositoryCours: RepositoryCours
+    @Autowired val mockMvc: MockMvc
 ) {
 
     @Test

@@ -16,9 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestRestControllerValeur(
-    @Autowired val mockMvc: MockMvc,
-    @Autowired private val repositoryValeur: RepositoryValeur,
-    @Autowired private val repositoryCours: RepositoryCours
+    @Autowired val mockMvc: MockMvc
 ) {
 
     @Test
