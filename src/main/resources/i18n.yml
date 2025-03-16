@@ -1,0 +1,86 @@
+api:
+  authentification:
+    name: "API pour la récupération d'un Bearer JWT"
+    operation:
+      generateJwtToken:
+        summary: "Récupération du JsonWebToken"
+        response:
+          200: "Le JWT"
+  cours:
+    name: "API des cours"
+    operation:
+      getDerniersCours:
+        summary: "Récupération du dernier cours pour toutes les valeurs"
+        response:
+          200: "Les cours"
+      getDernierCoursPourUneValeur:
+        summary: "Récupère le dernier cours pour une valeur identifiée par son ticker"
+        parameter:
+          ticker: "ticker identifiant la valeur"
+        response:
+          200: "Le cours"
+          404: "Ticker introuvable"
+      getDerniersCoursPourUneValeur:
+        summary: "Récupération des cours d'une valeur"
+        parameter:
+          ticker: "ticker identifiant la valeur"
+          limit: "nombre maximum de cours à récupérer"
+        response:
+          200: "Les cours"
+  valeurs:
+    name: "API des valeurs"
+    operation:
+      getValeurs:
+        summary: "Récupère les valeurs"
+        response:
+          200: "Les valeurs"
+      getValeur:
+        summary: "Récupère une valeur identifiée par son ticker"
+        parameter:
+          ticker: "ticker identifiant la valeur"
+        response:
+          200: "La valeur"
+          404: "Ticker introuvable"
+
+dto:
+  DtoAuthentification:
+    description: "Informations pour réaliser une authentification."
+    field:
+      identifiant: "identifiant de l'utilisateur"
+      motDePasse: "mot de passe de l'utilisateur"
+  DtoValeur:
+    description: "Une valeur."
+    field:
+      ticker: "le ticker"
+      marche: "le marché"
+      libelle: "le libellé"
+  DtoJWTWrapper:
+    description: "JsonWebToken."
+    field:
+      jwt: "le JWT"
+  DtoDcpuvCours:
+    description: "Un cours à une date donnée."
+    field:
+      date: "la date du cours"
+      ouverture: "cours à l'ouverture"
+      plusHaut: "cours le plus haut"
+      plusBas: "cours le plus bas"
+      cloture: "cours à la clôture"
+      volume: "volume échangé en nombre de titres"
+      moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
+      alerte: "alerte changement haussier/baissier"
+  DtoDctvCours:
+    description: "Le cours d'une valeur."
+    field:
+      ticker: "le ticker"
+      ouverture: "cours à l'ouverture"
+      plusHaut: "cours le plus haut"
+      plusBas: "cours le plus bas"
+      cloture: "cours à la clôture"
+      volume: "volume échangé en nombre de titres"
+      moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
+      alerte: "alerte changement haussier/baissier"
+  DtoDctvWrapper:
+    description: "Le dernier cours des valeurs."
+    field:
+      date: "la date du dernier cours"
