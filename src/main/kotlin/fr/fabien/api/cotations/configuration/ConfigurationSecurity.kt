@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.servers.Server
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.security.SecurityScheme
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
@@ -20,6 +21,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
 @Configuration
@@ -43,11 +46,12 @@ import org.springframework.security.web.SecurityFilterChain
 )
 @PropertySource(value = ["classpath:i18n.yml"], factory = YamlPropertySourceFactory::class)
 class ConfigurationSecurity(
-    private val serviceJWT: ServiceJWT
+    private val serviceJWT: ServiceJWT,
+    @Value("\${security.allowed.origins}") private val origins: List<String>
 ) {
 
     companion object {
-        const val SECURITY_SCHEME_NAME: String = "JWT Bearer Authentication";
+        const val SECURITY_SCHEME_NAME: String = "JWT Bearer Authentication"
     }
 
     @Bean
@@ -64,7 +68,19 @@ class ConfigurationSecurity(
     @Profile("!test")
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { csrf -> csrf.disable() }
-            .cors { cors -> cors.disable() }
+            .cors { cors ->
+                cors.configurationSource(
+                    UrlBasedCorsConfigurationSource()
+                        .apply {
+                            registerCorsConfiguration(
+                                "/**",
+                                CorsConfiguration().apply {
+                                    allowedOrigins = origins
+                                    allowedMethods = listOf("GET", "POST")
+                                    allowedHeaders = listOf("content-type", "accept")
+                                })
+                        })
+            }
             .authorizeHttpRequests { authorize ->
                 authorize
                     .requestMatchers("/bourse/authentification").permitAll()

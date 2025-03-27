@@ -41,11 +41,14 @@ spring:
       ddl-auto: update
 
 # JsonWebToken settings
-jwt:
-  key: ${APP_JWT_SECRET}
-  algorithm: HS512
-  expiresIn:
-    milliseconds: 86400000
+security:
+  jwt:
+    key: ${APP_JWT_SECRET}
+    algorithm: HS512
+    expiresIn:
+      milliseconds: 86400000
+  allowed:
+    origins: http://localhost:4200, http://fabienrigaux.freeboxos.fr
 
 # https://swagger.io/docs/specification/v3_0/api-host-and-base-path/
 api:

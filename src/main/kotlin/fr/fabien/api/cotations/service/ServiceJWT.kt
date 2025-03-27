@@ -19,12 +19,12 @@ import javax.crypto.SecretKey
 @Service
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 class ServiceJWT(
-    @Value("\${jwt.key}") private val jwtKey: String,
-    @Value("\${jwt.algorithm}") private val jwtAlgorithm: String,
-    @Value("\${jwt.expiresIn.milliseconds}") private val jwtExpiresInMS: Duration
+    @Value("\${security.jwt.key}") private val jwtKey: String,
+    @Value("\${security.jwt.algorithm}") private val jwtAlgorithm: String,
+    @Value("\${security.jwt.expiresIn.milliseconds}") private val jwtExpiresInMS: Duration
 ) {
-    val algorithm: JWSAlgorithm = JWSAlgorithm.parse(jwtAlgorithm)
-    val secretKey: SecretKey = OctetSequenceKey.Builder(jwtKey.toByteArray())
+    final val algorithm: JWSAlgorithm = JWSAlgorithm.parse(jwtAlgorithm)
+    final val secretKey: SecretKey = OctetSequenceKey.Builder(jwtKey.toByteArray())
         .algorithm(algorithm)
         .build()
         .toSecretKey()

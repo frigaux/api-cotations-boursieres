@@ -11,11 +11,14 @@ spring:
       hibernate:
         format_sql: true
 
-jwt:
-  key: Ep-zuUl8NTCIbXTYe4UwzToIohllkdlohrMDOvmSpQ18Y-6otlV8ndRSpv8wNLbOXM_bXPMWNt9eao7UaJ7hXA
-  algorithm: HS512
-  expiresIn:
-    milliseconds: 86400000
+security:
+  jwt:
+    key: "Ep-zuUl8NTCIbXTYe4UwzToIohllkdlohrMDOvmSpQ18Y-6otlV8ndRSpv8wNLbOXM_bXPMWNt9eao7UaJ7hXA"
+    algorithm: HS512
+    expiresIn:
+      milliseconds: 86400000
+  allowed:
+    origins: http://localhost:4200
 
 api:
   server:
