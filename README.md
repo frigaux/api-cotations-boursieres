@@ -42,8 +42,8 @@
     JwtAuthenticationProvider->>ProviderManager: JwtAuthenticationToken
     ProviderManager->>BearerTokenAuthenticationFilter: JwtAuthenticationToken
     BearerTokenAuthenticationFilter->>SecurityContext: JwtAuthenticationToken
-    BearerTokenAuthenticationFilter->>DispatcherServlet: authentification réussie (JwtAuthenticationToken dans SecurityContext)
-    DispatcherServlet->>Navigateur: résultat de l'exécution de la resource
+    BearerTokenAuthenticationFilter->>DispatcherServlet: authentification réussie avec stockage du JwtAuthenticationToken dans SecurityContext
+    DispatcherServlet->>Navigateur: exécution de la resource et renvoie du résultat au navigateur
 ```
 
 
