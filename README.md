@@ -21,7 +21,7 @@
 ## Appel sans le Bearer
 ```mermaid
   sequenceDiagram
-    Navigateur->>BearerTokenAuthenticationFilter: appel d'une resource protégée sans le Bearer
+    Navigateur->>BearerTokenAuthenticationFilter: appel d'une resource protégée
     BearerTokenAuthenticationFilter->>ProviderManager: authentification
     ProviderManager->>JwtAuthenticationProvider: authentification
     JwtAuthenticationProvider->>ProviderManager: InvalidBearerTokenException
@@ -32,18 +32,18 @@
 ## Appel avec le Bearer dans le header Authorization
 ```mermaid
   sequenceDiagram
-    Navigateur->>BearerTokenAuthenticationFilter: appel d'une resource protégée avec le Bearer
+    Navigateur->>BearerTokenAuthenticationFilter: appel d'une resource protégée
     BearerTokenAuthenticationFilter->>ProviderManager: authentification
     ProviderManager->>JwtAuthenticationProvider: authentification
-    JwtAuthenticationProvider->>NimbusJwtDecoder: décodage du JWT
+    JwtAuthenticationProvider->>NimbusJwtDecoder: décodage du JWT (vérification signature clé secrète)
     NimbusJwtDecoder->>JwtAuthenticationProvider: JWT
-    JwtAuthenticationProvider->>JwtAuthenticationConverter: récupération des GrantedAuthority
+    JwtAuthenticationProvider->>JwtAuthenticationConverter: GrantedAuthority
     JwtAuthenticationConverter->>JwtAuthenticationProvider: granted authorities
     JwtAuthenticationProvider->>ProviderManager: JwtAuthenticationToken
     ProviderManager->>BearerTokenAuthenticationFilter: JwtAuthenticationToken
     BearerTokenAuthenticationFilter->>SecurityContext: JwtAuthenticationToken
-    BearerTokenAuthenticationFilter->>DispatcherServlet: authentification réussi avec le JwtAuthenticationToken dans SecurityContext
-    DispatcherServlet->>Navigateur: renvoie le résultat de la resource au navigateur
+    BearerTokenAuthenticationFilter->>DispatcherServlet: authentification réussie (JwtAuthenticationToken dans SecurityContext)
+    DispatcherServlet->>Navigateur: résultat de l'exécution de la resource
 ```
 
 
