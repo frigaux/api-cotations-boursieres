@@ -77,7 +77,7 @@ class ConfigurationSecurity(
                                 CorsConfiguration().apply {
                                     allowedOrigins = origins
                                     allowedMethods = listOf("GET", "POST")
-                                    allowedHeaders = listOf("content-type", "accept")
+                                    allowedHeaders = listOf("content-type", "accept", "authorization")
                                 })
                         })
             }
