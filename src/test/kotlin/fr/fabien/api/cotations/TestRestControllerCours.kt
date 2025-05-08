@@ -1,7 +1,5 @@
 package fr.fabien.api.cotations
 
-import fr.fabien.jpa.cotations.repository.RepositoryCours
-import fr.fabien.jpa.cotations.repository.RepositoryValeur
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc

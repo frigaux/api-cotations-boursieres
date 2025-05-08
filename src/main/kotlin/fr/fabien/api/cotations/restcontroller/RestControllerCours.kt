@@ -2,6 +2,7 @@ package fr.fabien.api.cotations.restcontroller
 
 import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
+import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvLightCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
 import fr.fabien.api.cotations.restcontroller.exception.ClientError
@@ -12,6 +13,7 @@ import fr.fabien.jpa.cotations.repository.RepositoryCours
 import fr.fabien.jpa.cotations.repository.RepositoryValeur
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Tag(name = "\${api.cours.name}")
@@ -112,7 +115,7 @@ class RestControllerCours(
                 responseCode = "200", description = "\${api.cours.operation.getDerniersCoursPourUneValeur.response[200]}",
                 content = [Content(
                     mediaType = "application/json",
-                    schema = Schema(implementation = DtoDcpuvCours::class)
+                    array = ArraySchema(schema = Schema(implementation = DtoDcpuvLightCours::class), minItems = 1)
                 )]
             )
         ]
@@ -126,14 +129,14 @@ class RestControllerCours(
         @Min(1)
         @Max(200)
         @PathVariable limit: Int
-    ): List<DtoDcpuvCours> {
-        return repositoryCours.queryLatestByTicker(ticker, limit.coerceAtMost(200))
-            .map { cours ->
-                DtoDcpuvCours(
-                    cours.date.format(DateTimeFormatter.ISO_LOCAL_DATE),
-                    cours.ouverture, cours.plusHaut,
-                    cours.plusBas, cours.cloture, cours.volume,
-                    cours.moyennesMobiles, cours.alerte
+    ): List<DtoDcpuvLightCours> {
+        return repositoryCours.queryLatestLightByTicker(ticker, limit.coerceAtMost(200))
+            .map { objects ->
+                DtoDcpuvLightCours(
+                    (objects[0] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
+                    objects[1] as Double,
+                    objects[2] as Long,
+                    objects[3] as Boolean
                 )
             }
     }
