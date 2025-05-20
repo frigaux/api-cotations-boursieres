@@ -21,12 +21,20 @@ api:
           200: "Le cours"
           404: "Ticker introuvable"
       getDerniersCoursPourUneValeur:
-        summary: "Récupération des cours d'une valeur"
+        summary: "Récupération des derniers cours d'une valeur"
         parameter:
           ticker: "ticker identifiant la valeur"
           limit: "nombre maximum de cours à récupérer"
         response:
           200: "Les cours"
+      getDernieresMoyennesMobilesPourUneValeur:
+        summary: "Récupération des dernières moyennes mobiles sur x jours pour une valeur"
+        parameter:
+          ticker: "ticker identifiant la valeur"
+          nbJoursMM: "nombre de jours couverts par une moyenne mobile"
+          limit: "nombre maximum de moyennes mobiles à récupérer"
+        response:
+          200: "Les moyennes mobiles"
   valeurs:
     name: "API des valeurs"
     operation:
@@ -91,3 +99,8 @@ dto:
     description: "Le dernier cours des valeurs."
     field:
       date: "la date du dernier cours"
+  DtoDmmpuvMM:
+    description: "Une moyenne mobile à une date donnée."
+    field:
+      date: "la date de la moyenne mobile"
+      mm: "valeur de la moyenne mobile"

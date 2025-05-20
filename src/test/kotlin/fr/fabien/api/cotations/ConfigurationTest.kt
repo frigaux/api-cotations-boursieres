@@ -10,27 +10,29 @@ import org.springframework.context.annotation.Configuration
 import java.time.LocalDate
 
 @Configuration
-class ConfigurationTest(@Autowired private val repositoryValeur: RepositoryValeur,
-                        @Autowired private val repositoryCours: RepositoryCours
+class ConfigurationTest(
+    @Autowired private val repositoryValeur: RepositoryValeur,
+    @Autowired private val repositoryCours: RepositoryCours
 ) {
     companion object {
         val TICKER = "GLE"
     }
+
     init {
         val valeur: Valeur = Valeur(TICKER, Marche.EURO_LIST_A, "Societe Generale", setOf())
         repositoryValeur.save(valeur)
 
         repositoryCours.save(
             Cours(
-                valeur, LocalDate.now().minusDays(1), 36.895, 37.03, 36.65, 36.925,
-                2597395, mutableListOf(), false
+                valeur, LocalDate.now().minusDays(1), 37.76, 38.16, 37.64, 37.76,
+                3551503, mutableListOf(37.76), false
             )
         )
 
         repositoryCours.save(
             Cours(
-                valeur, LocalDate.now(), 36.8, 37.0, 36.6, 36.9,
-                2500000, mutableListOf(), false
+                valeur, LocalDate.now(), 37.795, 38.35, 37.47, 37.47,
+                3058833, mutableListOf(37.47, 37.615), false
             )
         )
     }

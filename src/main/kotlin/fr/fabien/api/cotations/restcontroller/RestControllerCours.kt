@@ -1,6 +1,7 @@
 package fr.fabien.api.cotations.restcontroller
 
 import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SECURITY_SCHEME_NAME
+import fr.fabien.api.cotations.restcontroller.dto.Dmmpuv.DtoDmmpuvMM
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvLightCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
@@ -53,7 +54,7 @@ class RestControllerCours(
         ]
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
-    private fun getDerniersCours(authentication: Authentication): DtoDctvWrapper {
+    private fun getDerniersCoursToutesValeurs(authentication: Authentication): DtoDctvWrapper {
         val valeurs: List<Valeur> = repositoryValeur.queryJoinLastCours()
         val date: String = valeurs.get(0) // assertion cannot raise IndexOutOfBoundsException
             .cours.elementAt(0)
@@ -75,14 +76,16 @@ class RestControllerCours(
     @ApiResponses(
         value = [
             ApiResponse(
-                responseCode = "200", description = "\${api.cours.operation.getDernierCoursPourUneValeur.response[200]}",
+                responseCode = "200",
+                description = "\${api.cours.operation.getDernierCoursPourUneValeur.response[200]}",
                 content = [Content(
                     mediaType = "application/json",
                     schema = Schema(implementation = DtoDcpuvCours::class)
                 )]
             ),
             ApiResponse(
-                responseCode = "404", description = "\${api.cours.operation.getDernierCoursPourUneValeur.response[404]}",
+                responseCode = "404",
+                description = "\${api.cours.operation.getDernierCoursPourUneValeur.response[404]}",
                 content = [Content(
                     mediaType = "application/json",
                     schema = Schema(implementation = ClientError::class)
@@ -93,7 +96,11 @@ class RestControllerCours(
     @GetMapping(value = ["{ticker}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getDernierCoursPourUneValeur(
         authentication: Authentication,
-        @Parameter(description = "\${api.cours.operation.getDernierCoursPourUneValeur.parameter.ticker}", required = true, example = "GLE")
+        @Parameter(
+            description = "\${api.cours.operation.getDernierCoursPourUneValeur.parameter.ticker}",
+            required = true,
+            example = "GLE"
+        )
         @PathVariable ticker: String
     ): DtoDcpuvCours {
         return repositoryCours.queryLastByTicker(ticker)
@@ -112,7 +119,8 @@ class RestControllerCours(
     @ApiResponses(
         value = [
             ApiResponse(
-                responseCode = "200", description = "\${api.cours.operation.getDerniersCoursPourUneValeur.response[200]}",
+                responseCode = "200",
+                description = "\${api.cours.operation.getDerniersCoursPourUneValeur.response[200]}",
                 content = [Content(
                     mediaType = "application/json",
                     array = ArraySchema(schema = Schema(implementation = DtoDcpuvLightCours::class), minItems = 1)
@@ -123,20 +131,77 @@ class RestControllerCours(
     @GetMapping(value = ["{ticker}/{limit}"], produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getDerniersCoursPourUneValeur(
         authentication: Authentication,
-        @Parameter(description = "\${api.cours.operation.getDerniersCoursPourUneValeur.parameter.ticker}", required = true, example = "GLE")
+        @Parameter(
+            description = "\${api.cours.operation.getDerniersCoursPourUneValeur.parameter.ticker}",
+            required = true,
+            example = "GLE"
+        )
         @PathVariable ticker: String,
-        @Parameter(description = "\${api.cours.operation.getDerniersCoursPourUneValeur.parameter.limit}", required = true, example = "30")
+        @Parameter(
+            description = "\${api.cours.operation.getDerniersCoursPourUneValeur.parameter.limit}",
+            required = true,
+            example = "30"
+        )
         @Min(1)
-        @Max(200)
+        @Max(300)
         @PathVariable limit: Int
     ): List<DtoDcpuvLightCours> {
-        return repositoryCours.queryLatestLightByTicker(ticker, limit.coerceAtMost(200))
+        return repositoryCours.queryLatestLightByTicker(ticker, limit.coerceAtMost(300))
             .map { objects ->
                 DtoDcpuvLightCours(
                     (objects[0] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
                     objects[1] as Double,
                     objects[2] as Long,
                     objects[3] as Boolean
+                )
+            }
+    }
+
+    @Operation(summary = "\${api.cours.operation.getDernieresMoyennesMobilesPourUneValeur.summary}")
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "\${api.cours.operation.getDernieresMoyennesMobilesPourUneValeur.response[200]}",
+                content = [Content(
+                    mediaType = "application/json",
+                    array = ArraySchema(schema = Schema(implementation = DtoDmmpuvMM::class), minItems = 1)
+                )]
+            )
+        ]
+    )
+    @GetMapping(value = ["{ticker}/{limit}/{nbJoursMM}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    private fun getDernieresMoyennesMobilesPourUneValeur(
+        authentication: Authentication,
+        @Parameter(
+            description = "\${api.cours.operation.getDernieresMoyennesMobilesPourUneValeur.parameter.ticker}",
+            required = true,
+            example = "GLE"
+        )
+        @PathVariable ticker: String,
+        @Parameter(
+            description = "\${api.cours.operation.getDernieresMoyennesMobilesPourUneValeur.parameter.limit}",
+            required = true,
+            example = "30"
+        )
+        @Min(1)
+        @Max(300)
+        @PathVariable limit: Int,
+        @Parameter(
+            description = "\${api.cours.operation.getDernieresMoyennesMobilesPourUneValeur.parameter.nbJoursMM}",
+            required = true,
+            example = "20"
+        )
+        @Min(1)
+        @Max(300)
+        @PathVariable nbJoursMM: Int
+    ): List<DtoDmmpuvMM> {
+        return repositoryCours.queryLatestByTicker(ticker, limit.coerceAtMost(300))
+            .filter { cours -> cours.moyennesMobiles.size >= nbJoursMM }
+            .map { cours ->
+                DtoDmmpuvMM(
+                    (cours.date).format(DateTimeFormatter.ISO_LOCAL_DATE),
+                    cours.moyennesMobiles[nbJoursMM - 1]
                 )
             }
     }

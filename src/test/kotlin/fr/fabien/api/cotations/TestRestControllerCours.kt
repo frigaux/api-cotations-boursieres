@@ -51,4 +51,13 @@ class TestRestControllerCours(
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$.length()").value(2))
     }
+
+    @Test
+    fun `Given 1 valeur avec 2 cours when request getDernieresMoyennesMobilesPourUneValeur pour 2j then return 1 moyenne mobile`() {
+        mockMvc.perform(get("/bourse/cours/${ConfigurationTest.TICKER}/2/2").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$.length()").value(1))
+    }
 }
