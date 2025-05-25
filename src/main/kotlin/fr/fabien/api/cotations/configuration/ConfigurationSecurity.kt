@@ -68,6 +68,8 @@ class ConfigurationSecurity(
     @Profile("!test")
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { csrf -> csrf.disable() }
+            // https://docs.spring.io/spring-security/reference/reactive/integrations/cors.html
+            // https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Methods/OPTIONS
             .cors { cors ->
                 cors.configurationSource(
                     UrlBasedCorsConfigurationSource()
@@ -78,6 +80,8 @@ class ConfigurationSecurity(
                                     allowedOrigins = origins
                                     allowedMethods = listOf("GET", "POST")
                                     allowedHeaders = listOf("content-type", "accept", "authorization")
+                                    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Access-Control-Max-Age
+                                    maxAge = 86400
                                 })
                         })
             }
