@@ -27,6 +27,7 @@ class TestRestControllerCours(
             .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
             .andExpect(jsonPath("$.cours").isArray())
             .andExpect(jsonPath("$.cours.length()").value(1))
+            .andExpect(header().exists("Cache-Control"))
     }
 
     @Test
@@ -41,6 +42,7 @@ class TestRestControllerCours(
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
+            .andExpect(header().exists("Cache-Control"))
     }
 
     @Test
@@ -50,6 +52,7 @@ class TestRestControllerCours(
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$.length()").value(2))
+            .andExpect(header().exists("Cache-Control"))
     }
 
     @Test
@@ -59,5 +62,6 @@ class TestRestControllerCours(
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$.length()").value(1))
+            .andExpect(header().exists("Cache-Control"))
     }
 }

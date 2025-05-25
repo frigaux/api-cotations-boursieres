@@ -24,6 +24,7 @@ class TestRestControllerValeur(
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$.length()").value(1))
+            .andExpect(header().exists("Cache-Control"))
     }
 
     @Test
@@ -38,5 +39,6 @@ class TestRestControllerValeur(
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.ticker").value(ConfigurationTest.TICKER))
+            .andExpect(header().exists("Cache-Control"))
     }
 }
