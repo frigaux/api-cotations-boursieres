@@ -3,6 +3,7 @@
   - spring-boot-starter-web
   - spring-boot-starter-validation (annotations correspondant aux contraintes pour la validation des données)
   - spring-boot-starter-test
+  - spring-boot-starter-cache
   - spring-boot-starter-security (spring-security-config 6.4.2 et spring-security-web 6.4.2)
     - spring-security-oauth2-resource-server 6.4.2 (APIs via OAuth 2.0 Bearer Tokens)
     - spring-security-oauth2-jose 6.4.2 (Javascript Object Signing and Encryption : JSON Web Token, JSON Web Signature, JSON Web Encryption, JSON Web Key)

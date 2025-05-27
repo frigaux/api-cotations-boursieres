@@ -3,8 +3,7 @@ package fr.fabien.api.cotations.restcontroller
 import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.restcontroller.dto.DtoValeur
 import fr.fabien.api.cotations.restcontroller.exception.ClientError
-import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
-import fr.fabien.jpa.cotations.repository.RepositoryValeur
+import fr.fabien.api.cotations.service.ServiceValeur
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.ArraySchema
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("bourse/valeurs")
 @SecurityRequirement(name = SECURITY_SCHEME_NAME)
-class RestControllerValeur(private val repositoryValeur: RepositoryValeur) {
+class RestControllerValeur(private val serviceValeur: ServiceValeur) {
 
     @Operation(summary = "\${api.valeurs.operation.getValeurs.summary}")
     @ApiResponses(
@@ -41,8 +40,7 @@ class RestControllerValeur(private val repositoryValeur: RepositoryValeur) {
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getValeurs(authentication: Authentication): List<DtoValeur> {
-        return repositoryValeur.findAll()
-            .map { valeur -> DtoValeur(valeur.ticker, valeur.marche, valeur.libelle) }
+        return serviceValeur.getValeurs()
     }
 
     @Operation(summary = "\${api.valeurs.operation.getValeur.summary}")
@@ -70,8 +68,6 @@ class RestControllerValeur(private val repositoryValeur: RepositoryValeur) {
         @Parameter(description = "\${api.valeurs.operation.getValeur.parameter.ticker}", required = true, example = "GLE")
         @PathVariable ticker: String
     ): DtoValeur {
-        return repositoryValeur.findByTicker(ticker)
-            ?.let { valeur -> DtoValeur(valeur.ticker, valeur.marche, valeur.libelle) }
-            ?: run { throw NotFoundException() }
+        return serviceValeur.getValeur(ticker)
     }
 }

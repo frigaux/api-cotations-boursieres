@@ -4,14 +4,9 @@ import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SEC
 import fr.fabien.api.cotations.restcontroller.dto.Dmmpuv.DtoDmmpuvMM
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvLightCours
-import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
 import fr.fabien.api.cotations.restcontroller.exception.ClientError
-import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
-import fr.fabien.jpa.cotations.entity.Cours
-import fr.fabien.jpa.cotations.entity.Valeur
-import fr.fabien.jpa.cotations.repository.RepositoryCours
-import fr.fabien.jpa.cotations.repository.RepositoryValeur
+import fr.fabien.api.cotations.service.ServiceCours
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.ArraySchema
@@ -29,17 +24,12 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Tag(name = "\${api.cours.name}")
 @RestController
 @RequestMapping("bourse/cours")
 @SecurityRequirement(name = SECURITY_SCHEME_NAME)
-class RestControllerCours(
-    private val repositoryValeur: RepositoryValeur,
-    private val repositoryCours: RepositoryCours
-) {
+class RestControllerCours(private val serviceCours: ServiceCours) {
 
     @Operation(summary = "\${api.cours.operation.getDerniersCours.summary}")
     @ApiResponses(
@@ -55,20 +45,7 @@ class RestControllerCours(
     )
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getDerniersCoursToutesValeurs(authentication: Authentication): DtoDctvWrapper {
-        val valeurs: List<Valeur> = repositoryValeur.queryJoinLastCours()
-        val date: String = valeurs.get(0) // assertion cannot raise IndexOutOfBoundsException
-            .cours.elementAt(0)
-            .date.format(DateTimeFormatter.ISO_LOCAL_DATE)
-        return DtoDctvWrapper(
-            date,
-            valeurs.map { valeur ->
-                val cours: Cours = valeur.cours.elementAt(0)
-                DtoDctvCours(
-                    valeur.ticker, cours.ouverture, cours.plusHaut,
-                    cours.plusBas, cours.cloture, cours.volume,
-                    cours.moyennesMobiles, cours.alerte
-                )
-            })
+        return serviceCours.getDerniersCoursToutesValeurs()
     }
 
 
@@ -103,16 +80,7 @@ class RestControllerCours(
         )
         @PathVariable ticker: String
     ): DtoDcpuvCours {
-        return repositoryCours.queryLastByTicker(ticker)
-            ?.let {
-                DtoDcpuvCours(
-                    it.date.format(DateTimeFormatter.ISO_LOCAL_DATE),
-                    it.ouverture, it.plusHaut,
-                    it.plusBas, it.cloture, it.volume,
-                    it.moyennesMobiles, it.alerte
-                )
-            }
-            ?: run { throw NotFoundException() }
+        return serviceCours.getDernierCoursPourUneValeur(ticker)
     }
 
     @Operation(summary = "\${api.cours.operation.getDerniersCoursPourUneValeur.summary}")
@@ -146,15 +114,7 @@ class RestControllerCours(
         @Max(300)
         @PathVariable limit: Int
     ): List<DtoDcpuvLightCours> {
-        return repositoryCours.queryLatestLightByTicker(ticker, limit.coerceAtMost(300))
-            .map { objects ->
-                DtoDcpuvLightCours(
-                    (objects[0] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
-                    objects[1] as Double,
-                    objects[2] as Long,
-                    objects[3] as Boolean
-                )
-            }
+        return serviceCours.getDerniersCoursPourUneValeur(ticker, limit)
     }
 
     @Operation(summary = "\${api.cours.operation.getDernieresMoyennesMobilesPourUneValeur.summary}")
@@ -196,13 +156,6 @@ class RestControllerCours(
         @Max(300)
         @PathVariable nbJoursMM: Int
     ): List<DtoDmmpuvMM> {
-        return repositoryCours.queryLatestByTicker(ticker, limit.coerceAtMost(300))
-            .filter { cours -> cours.moyennesMobiles.size >= nbJoursMM }
-            .map { cours ->
-                DtoDmmpuvMM(
-                    (cours.date).format(DateTimeFormatter.ISO_LOCAL_DATE),
-                    cours.moyennesMobiles[nbJoursMM - 1]
-                )
-            }
+        return serviceCours.getDernieresMoyennesMobilesPourUneValeur(ticker, limit, nbJoursMM)
     }
 }

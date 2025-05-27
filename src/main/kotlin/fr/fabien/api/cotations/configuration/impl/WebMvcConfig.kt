@@ -1,5 +1,6 @@
-package fr.fabien.api.cotations.configuration
+package fr.fabien.api.cotations.configuration.impl
 
+import fr.fabien.api.cotations.configuration.impl.cache.CustomCacheControl
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
