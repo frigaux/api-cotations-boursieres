@@ -62,3 +62,8 @@ server:
 springdoc:
   api-docs:
     resolve-schema-properties: true
+
+# Cache : HTTP Cache-Control, spring-boot-starter-cache with CustomCacheManager
+cache:
+  expired:
+    hour: 20

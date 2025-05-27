@@ -7,12 +7,8 @@ import java.util.concurrent.Callable
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
-class CustomCache(private val name: String) : Cache {
+class CustomCache(private val name: String, private val heureCacheExpire: Int) : Cache {
     private var cache: ConcurrentMap<Any, CustomValueWrapper> = ConcurrentHashMap()
-
-    companion object {
-        val HEURE_CACHE_PERIME: Int = 20
-    }
 
     override fun getName(): String {
         return name
@@ -26,10 +22,10 @@ class CustomCache(private val name: String) : Cache {
         return cache.get(key)
             ?.let {
                 var jour = LocalDateTime.now()
-                if (LocalTime.now().hour < HEURE_CACHE_PERIME) {
+                if (LocalTime.now().hour < heureCacheExpire) {
                     jour = jour.minusDays(1)
                 }
-                val dateCacheExpire2 = LocalDateTime.of(jour.year, jour.month, jour.dayOfMonth, HEURE_CACHE_PERIME, 0)
+                val dateCacheExpire2 = LocalDateTime.of(jour.year, jour.month, jour.dayOfMonth, heureCacheExpire, 0)
                 if (it.getDateTime() > dateCacheExpire2) it else null
             }
     }

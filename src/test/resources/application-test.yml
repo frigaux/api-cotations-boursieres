@@ -29,3 +29,7 @@ api:
 server:
   servlet:
     context-path: /v${api.server.version}
+
+cache:
+  expired:
+    hour: 20
