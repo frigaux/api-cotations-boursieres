@@ -18,27 +18,27 @@ class TestRestControllerValeur(
 ) {
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getValeurs then return 1 valeur`() {
+    fun `Given 2 valeurs avec 2 cours when request getValeurs then return 2 valeurs`() {
         mockMvc.perform(get("/bourse/valeurs").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$.length()").value(1))
+            .andExpect(jsonPath("$.length()").value(2))
             .andExpect(header().exists("Cache-Control"))
     }
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getValeur NIMP then 404`() {
+    fun `Given 2 valeurs avec 2 cours when request getValeur NIMP then 404`() {
         mockMvc.perform(get("/bourse/valeurs/NIMP").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound)
     }
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getValeur then return 1 valeur`() {
-        mockMvc.perform(get("/bourse/valeurs/${ConfigurationTest.TICKER}").accept(MediaType.APPLICATION_JSON))
+    fun `Given 2 valeurs avec 2 cours when request getValeur then return 1 valeur`() {
+        mockMvc.perform(get("/bourse/valeurs/${ConfigurationTest.TICKER_GLE}").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.ticker").value(ConfigurationTest.TICKER))
+            .andExpect(jsonPath("$.ticker").value(ConfigurationTest.TICKER_GLE))
             .andExpect(header().exists("Cache-Control"))
     }
 }

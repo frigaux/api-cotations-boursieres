@@ -21,20 +21,27 @@ api:
           200: "Le cours"
           404: "Ticker introuvable"
       getDerniersCoursPourUneValeur:
-        summary: "Récupération des derniers cours d'une valeur"
+        summary: "Récupération des derniers cours d'une valeur identifiée par son ticker"
         parameter:
           ticker: "ticker identifiant la valeur"
           limit: "nombre maximum de cours à récupérer"
         response:
           200: "Les cours"
       getDernieresMoyennesMobilesPourUneValeur:
-        summary: "Récupération des dernières moyennes mobiles sur x jours pour une valeur"
+        summary: "Récupération des dernières moyennes mobiles sur nbJoursMM jours pour une valeur identifiée par son ticker"
         parameter:
           ticker: "ticker identifiant la valeur"
           nbJoursMM: "nombre de jours couverts par une moyenne mobile"
           limit: "nombre maximum de moyennes mobiles à récupérer"
         response:
           200: "Les moyennes mobiles"
+      getDerniersCoursPourPlusieursValeurs:
+        summary: "Récupération des derniers cours pour plusieurs valeurs identifiées par leur ticker"
+        parameter:
+          tickers: "tickers identifiant les valeurs"
+          limit: "nombre maximum de cours à récupérer"
+        response:
+          200: "Les cours"
   valeurs:
     name: "API des valeurs"
     operation:
@@ -77,7 +84,7 @@ dto:
       volume: "volume échangé en nombre de titres"
       moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
       alerte: "alerte changement haussier/baissier"
-  DtoDcpuvLightCours:
+  DtoDcpuvCoursAllege:
     description: "Un cours à une date donnée."
     field:
       date: "la date du cours"
@@ -104,3 +111,14 @@ dto:
     field:
       date: "la date de la moyenne mobile"
       mm: "valeur de la moyenne mobile"
+  DtoDcppvCours:
+    description: "Les derniers cours pour une valeur."
+    field:
+      ticker: "le ticker identifiant la valeur"
+      ouverture: "cours à l'ouverture"
+      plusHaut: "cours le plus haut"
+      plusBas: "cours le plus bas"
+      cloture: "cours à la clôture"
+      volume: "volume échangé en nombre de titres"
+      moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
+      alerte: "alerte changement haussier/baissier"

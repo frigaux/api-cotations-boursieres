@@ -2,8 +2,9 @@ package fr.fabien.api.cotations.restcontroller
 
 import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.restcontroller.dto.Dmmpuv.DtoDmmpuvMM
+import fr.fabien.api.cotations.restcontroller.dto.dcppv.DtoDcppvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
-import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvLightCours
+import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCoursAllege
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
 import fr.fabien.api.cotations.restcontroller.exception.ClientError
 import fr.fabien.api.cotations.service.ServiceCours
@@ -20,10 +21,7 @@ import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import org.springframework.http.MediaType
 import org.springframework.security.core.Authentication
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @Tag(name = "\${api.cours.name}")
 @RestController
@@ -91,7 +89,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
                 description = "\${api.cours.operation.getDerniersCoursPourUneValeur.response[200]}",
                 content = [Content(
                     mediaType = "application/json",
-                    array = ArraySchema(schema = Schema(implementation = DtoDcpuvLightCours::class), minItems = 1)
+                    array = ArraySchema(schema = Schema(implementation = DtoDcpuvCoursAllege::class), minItems = 1)
                 )]
             )
         ]
@@ -113,7 +111,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
         @Min(1)
         @Max(300)
         @PathVariable limit: Int
-    ): List<DtoDcpuvLightCours> {
+    ): List<DtoDcpuvCoursAllege> {
         return serviceCours.getDerniersCoursPourUneValeur(ticker, limit)
     }
 
@@ -130,7 +128,10 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
             )
         ]
     )
-    @GetMapping(value = ["{ticker}/{limit}/{nbJoursMM}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping(
+        value = ["moyennes-mobiles/{ticker}/{limit}/{nbJoursMM}"],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
     private fun getDernieresMoyennesMobilesPourUneValeur(
         authentication: Authentication,
         @Parameter(
@@ -157,5 +158,39 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
         @PathVariable nbJoursMM: Int
     ): List<DtoDmmpuvMM> {
         return serviceCours.getDernieresMoyennesMobilesPourUneValeur(ticker, limit, nbJoursMM)
+    }
+
+    @Operation(summary = "\${api.cours.operation.getDerniersCoursPourPlusieursValeurs.summary}")
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "\${api.cours.operation.getDerniersCoursPourPlusieursValeurs.response[200]}",
+                content = [Content(
+                    mediaType = "application/json",
+                    array = ArraySchema(schema = Schema(implementation = DtoDcppvCours::class), minItems = 1)
+                )]
+            )
+        ]
+    )
+    @GetMapping(value = ["tickers/{limit}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    private fun getDerniersCoursPourPlusieursValeurs(
+        authentication: Authentication,
+        @Parameter(
+            description = "\${api.cours.operation.getDerniersCoursPourPlusieursValeurs.parameter.limit}",
+            required = true,
+            example = "30"
+        )
+        @Min(1)
+        @Max(300)
+        @PathVariable limit: Int,
+        @Parameter(
+            description = "\${api.cours.operation.getDerniersCoursPourPlusieursValeurs.parameter.tickers}",
+            required = true,
+            example = "[GLE, BNP]"
+        )
+        @RequestParam tickers: Set<String>,
+    ): List<DtoDcppvCours> {
+        return serviceCours.getDerniersCoursPourPlusieursValeurs(tickers, limit)
     }
 }

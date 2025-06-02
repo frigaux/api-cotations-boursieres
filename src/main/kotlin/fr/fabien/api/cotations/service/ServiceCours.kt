@@ -1,8 +1,9 @@
 package fr.fabien.api.cotations.service
 
 import fr.fabien.api.cotations.restcontroller.dto.Dmmpuv.DtoDmmpuvMM
+import fr.fabien.api.cotations.restcontroller.dto.dcppv.DtoDcppvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
-import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvLightCours
+import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCoursAllege
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
 import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
@@ -53,10 +54,10 @@ class ServiceCours(
     }
 
     @Cacheable("getDerniersCoursPourUneValeur")
-    fun getDerniersCoursPourUneValeur(ticker: String, limit: Int): List<DtoDcpuvLightCours> {
+    fun getDerniersCoursPourUneValeur(ticker: String, limit: Int): List<DtoDcpuvCoursAllege> {
         return repositoryCours.queryLatestLightByTicker(ticker, limit.coerceAtMost(300))
             .map { objects ->
-                DtoDcpuvLightCours(
+                DtoDcpuvCoursAllege(
                     (objects[0] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
                     objects[1] as Double,
                     objects[2] as Long,
@@ -75,5 +76,27 @@ class ServiceCours(
                     cours.moyennesMobiles[nbJoursMM - 1]
                 )
             }
+    }
+
+    @Cacheable("getDerniersCoursPourPlusieursValeurs")
+    fun getDerniersCoursPourPlusieursValeurs(tickers: Set<String>, limit: Int): List<DtoDcppvCours> {
+        val coursAllegeByTicker: Map<String, List<DtoDcpuvCoursAllege>> =
+            repositoryCours.queryLatestLightByTickers(tickers, limit * tickers.size)
+                .groupBy({ objects -> objects[0] as String }, { objects ->
+                    DtoDcpuvCoursAllege(
+                        (objects[1] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
+                        objects[2] as Double,
+                        objects[3] as Long,
+                        objects[4] as Boolean
+                    )
+                })
+        return repositoryCours.queryLastByTickers(tickers).map { cours ->
+            DtoDcppvCours(
+                cours.valeur.ticker,
+                cours.ouverture, cours.plusHaut,
+                cours.plusBas, cours.cloture, cours.volume,
+                cours.moyennesMobiles, cours.alerte, coursAllegeByTicker.get(cours.valeur.ticker)!!
+            )
+        }
     }
 }

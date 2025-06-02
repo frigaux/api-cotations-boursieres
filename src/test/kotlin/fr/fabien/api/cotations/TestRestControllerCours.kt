@@ -20,25 +20,25 @@ class TestRestControllerCours(
 ) {
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getDernierCoursToutesValeurs then return 1 cours`() {
+    fun `Given 2 valeurs avec 2 cours when request getDernierCoursToutesValeurs then return 2 cours`() {
         mockMvc.perform(get("/bourse/cours").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
             .andExpect(jsonPath("$.cours").isArray())
-            .andExpect(jsonPath("$.cours.length()").value(1))
+            .andExpect(jsonPath("$.cours.length()").value(2))
             .andExpect(header().exists("Cache-Control"))
     }
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getDernierCoursPourUneValeur NIMP then 404`() {
+    fun `Given 2 valeurs avec 2 cours when request getDernierCoursPourUneValeur NIMP then 404`() {
         mockMvc.perform(get("/bourse/cours/NIMP").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound)
     }
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getDernierCoursPourUneValeur then return 1 cours`() {
-        mockMvc.perform(get("/bourse/cours/${ConfigurationTest.TICKER}").accept(MediaType.APPLICATION_JSON))
+    fun `Given 2 valeurs avec 2 cours when request getDernierCoursPourUneValeur then return 1 cours`() {
+        mockMvc.perform(get("/bourse/cours/${ConfigurationTest.TICKER_GLE}").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.date").value(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
@@ -46,8 +46,8 @@ class TestRestControllerCours(
     }
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getDerniersCoursPourUneValeur then return 2 cours`() {
-        mockMvc.perform(get("/bourse/cours/${ConfigurationTest.TICKER}/2").accept(MediaType.APPLICATION_JSON))
+    fun `Given 2 valeurs avec 2 cours when request getDerniersCoursPourUneValeur then return 2 cours`() {
+        mockMvc.perform(get("/bourse/cours/${ConfigurationTest.TICKER_GLE}/2").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
@@ -56,12 +56,22 @@ class TestRestControllerCours(
     }
 
     @Test
-    fun `Given 1 valeur avec 2 cours when request getDernieresMoyennesMobilesPourUneValeur pour 2j then return 1 moyenne mobile`() {
-        mockMvc.perform(get("/bourse/cours/${ConfigurationTest.TICKER}/2/2").accept(MediaType.APPLICATION_JSON))
+    fun `Given 2 valeurs avec 2 cours when request getDernieresMoyennesMobilesPourUneValeur pour 2j then return 1 moyenne mobile`() {
+        mockMvc.perform(get("/bourse/cours/moyennes-mobiles/${ConfigurationTest.TICKER_GLE}/2/2").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$.length()").value(1))
+            .andExpect(header().exists("Cache-Control"))
+    }
+
+    @Test
+    fun `Given 2 valeurs avec 2 cours when request getDerniersCoursPourPlusieursValeurs then return 2 cours`() {
+        mockMvc.perform(get("/bourse/cours/tickers/4?tickers=GLE,BNP").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$.length()").value(2))
             .andExpect(header().exists("Cache-Control"))
     }
 }
