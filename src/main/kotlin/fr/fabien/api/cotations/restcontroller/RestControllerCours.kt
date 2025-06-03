@@ -187,7 +187,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
         @Parameter(
             description = "\${api.cours.operation.getDerniersCoursPourPlusieursValeurs.parameter.tickers}",
             required = true,
-            example = "[GLE, BNP]"
+            example = "GLE, BNP"
         )
         @RequestParam tickers: Set<String>,
     ): List<DtoDcppvCours> {
