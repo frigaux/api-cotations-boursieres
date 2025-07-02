@@ -92,6 +92,7 @@ class ServiceCours(
                 })
         return repositoryCours.queryLastByTickers(tickers).map { cours ->
             DtoDcppvCours(
+                (cours.date).format(DateTimeFormatter.ISO_LOCAL_DATE),
                 cours.valeur.ticker,
                 cours.ouverture, cours.plusHaut,
                 cours.plusBas, cours.cloture, cours.volume,

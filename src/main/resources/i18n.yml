@@ -114,6 +114,7 @@ dto:
   DtoDcppvCours:
     description: "Les derniers cours pour une valeur."
     field:
+      date: "la date du cours"
       ticker: "le ticker identifiant la valeur"
       ouverture: "cours à l'ouverture"
       plusHaut: "cours le plus haut"

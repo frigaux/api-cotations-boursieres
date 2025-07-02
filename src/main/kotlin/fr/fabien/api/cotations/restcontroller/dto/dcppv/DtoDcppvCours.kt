@@ -10,6 +10,12 @@ import jakarta.validation.constraints.Size
 
 @Schema(description = "\${dto.DtoDcppvCours.description}")
 data class DtoDcppvCours(
+    @field:Schema(
+        description = "\${dto.DtoDcppvCours.field.date}", example = "2025-02-21", required = true,
+        format = "date", pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}"
+    )
+    @field:NotBlank
+    val date: String,
     @field:Schema(description = "\${dto.DtoDcppvCours.field.ticker}", example = "GLE", required = true, pattern = "[A-Z0-9]{1,5}")
     @field:NotBlank
     @field:Size(max = 5)
