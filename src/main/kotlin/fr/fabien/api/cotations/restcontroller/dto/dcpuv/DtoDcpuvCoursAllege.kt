@@ -18,7 +18,4 @@ data class DtoDcpuvCoursAllege(
     @field:Schema(description = "\${dto.DtoDcpuvCoursAllege.field.volume}", example = "3252367", required = true)
     @field:NotNull
     val volume: Long,
-    @field:Schema(description = "\${dto.DtoDcpuvCoursAllege.field.alerte}", required = true)
-    @field:NotNull
-    val alerte: Boolean
 )

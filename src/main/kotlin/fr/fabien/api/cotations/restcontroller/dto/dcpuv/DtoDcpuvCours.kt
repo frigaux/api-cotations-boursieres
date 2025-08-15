@@ -38,7 +38,4 @@ data class DtoDcpuvCours(
     )
     @field:NotEmpty
     val moyennesMobiles: MutableList<Double>,
-    @field:Schema(description = "\${dto.DtoDcpuvCours.field.alerte}", required = true)
-    @field:NotNull
-    val alerte: Boolean
 )

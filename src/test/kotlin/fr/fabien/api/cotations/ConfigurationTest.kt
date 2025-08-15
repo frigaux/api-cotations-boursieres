@@ -26,14 +26,14 @@ class ConfigurationTest(
         repositoryCours.save(
             Cours(
                 valeurGLE, LocalDate.now().minusDays(1), 37.76, 38.16, 37.64, 37.76,
-                3551503, mutableListOf(37.76), false
+                3551503, mutableListOf(37.76)
             )
         )
 
         repositoryCours.save(
             Cours(
                 valeurGLE, LocalDate.now(), 37.795, 38.35, 37.47, 37.47,
-                3058833, mutableListOf(37.47, 37.615), false
+                3058833, mutableListOf(37.47, 37.615)
             )
         )
 
@@ -43,14 +43,14 @@ class ConfigurationTest(
         repositoryCours.save(
             Cours(
                 valeurBNP, LocalDate.now().minusDays(1), 70.89, 71.2, 69.97, 70.3,
-                2497449, mutableListOf(), false
+                2497449, mutableListOf()
             )
         )
 
         repositoryCours.save(
             Cours(
                 valeurBNP, LocalDate.now(), 70.37, 71.54, 70.37, 70.87,
-                3309017, mutableListOf(), false
+                3309017, mutableListOf()
             )
         )
     }

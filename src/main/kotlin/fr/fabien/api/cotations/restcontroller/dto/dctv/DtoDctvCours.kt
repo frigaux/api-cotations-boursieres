@@ -37,7 +37,4 @@ data class DtoDctvCours(
     )
     @field:NotEmpty
     val moyennesMobiles: MutableList<Double>,
-    @field:Schema(description = "\${dto.DtoDctvCours.field.alerte}", required = true)
-    @field:NotNull
-    val alerte: Boolean
 )

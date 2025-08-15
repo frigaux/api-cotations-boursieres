@@ -83,14 +83,12 @@ dto:
       cloture: "cours à la clôture"
       volume: "volume échangé en nombre de titres"
       moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
-      alerte: "alerte changement haussier/baissier"
   DtoDcpuvCoursAllege:
     description: "Un cours à une date donnée."
     field:
       date: "la date du cours"
       cloture: "cours à la clôture"
       volume: "volume échangé en nombre de titres"
-      alerte: "alerte changement haussier/baissier"
   DtoDctvCours:
     description: "Le cours d'une valeur."
     field:
@@ -101,7 +99,6 @@ dto:
       cloture: "cours à la clôture"
       volume: "volume échangé en nombre de titres"
       moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
-      alerte: "alerte changement haussier/baissier"
   DtoDctvWrapper:
     description: "Le dernier cours des valeurs."
     field:
@@ -122,4 +119,3 @@ dto:
       cloture: "cours à la clôture"
       volume: "volume échangé en nombre de titres"
       moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
-      alerte: "alerte changement haussier/baissier"

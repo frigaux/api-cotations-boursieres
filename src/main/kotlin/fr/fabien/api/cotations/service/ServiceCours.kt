@@ -34,7 +34,7 @@ class ServiceCours(
                 DtoDctvCours(
                     valeur.ticker, cours.ouverture, cours.plusHaut,
                     cours.plusBas, cours.cloture, cours.volume,
-                    cours.moyennesMobiles, cours.alerte
+                    cours.moyennesMobiles
                 )
             })
     }
@@ -47,7 +47,7 @@ class ServiceCours(
                     it.date.format(DateTimeFormatter.ISO_LOCAL_DATE),
                     it.ouverture, it.plusHaut,
                     it.plusBas, it.cloture, it.volume,
-                    it.moyennesMobiles, it.alerte
+                    it.moyennesMobiles
                 )
             }
             ?: run { throw NotFoundException() }
@@ -60,8 +60,7 @@ class ServiceCours(
                 DtoDcpuvCoursAllege(
                     (objects[0] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
                     objects[1] as Double,
-                    objects[2] as Long,
-                    objects[3] as Boolean
+                    objects[2] as Long
                 )
             }
     }
@@ -86,8 +85,7 @@ class ServiceCours(
                     DtoDcpuvCoursAllege(
                         (objects[1] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
                         objects[2] as Double,
-                        objects[3] as Long,
-                        objects[4] as Boolean
+                        objects[3] as Long
                     )
                 })
         return repositoryCours.queryLastByTickers(tickers).map { cours ->
@@ -96,7 +94,7 @@ class ServiceCours(
                 cours.valeur.ticker,
                 cours.ouverture, cours.plusHaut,
                 cours.plusBas, cours.cloture, cours.volume,
-                cours.moyennesMobiles, cours.alerte, coursAllegeByTicker.get(cours.valeur.ticker)!!
+                cours.moyennesMobiles, coursAllegeByTicker.get(cours.valeur.ticker)!!
             )
         }
     }
