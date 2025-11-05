@@ -6,5 +6,5 @@
     <root level="ERROR">
         <appender-ref ref="FILE" />
     </root>
-    <logger name="fr.fabien.api.cotations" level="ERROR"/>
+    <logger name="fr.fabien.api.cotations" level="INFO"/>
 </configuration>

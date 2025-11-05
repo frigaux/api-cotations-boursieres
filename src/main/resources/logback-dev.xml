@@ -6,6 +6,6 @@
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
     </root>
-    <logger name="org.apache.tomcat" level="INFO"/>
-    <logger name="fr.fabien.api.cotations" level="INFO"/>
+    <logger name="org.apache.tomcat" level="DEBUG"/>
+    <logger name="fr.fabien.api.cotations" level="DEBUG"/>
 </configuration>

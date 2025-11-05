@@ -5,7 +5,7 @@ logging:
   file:
     name: "/home/fabien/log/api.log"
   threshold:
-    file: ERROR
+    file: INFO
 
 # Datasources
 # https://docs.spring.io/spring-boot/reference/data/sql.html#data.sql.datasource.configuration
