@@ -13,6 +13,10 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 class JwtAuthenticationConverter : Converter<Jwt, AbstractAuthenticationToken> {
     private val jwtGrantedAuthoritiesConverter: Converter<Jwt, Collection<GrantedAuthority>> =
         JwtGrantedAuthoritiesConverter()
+            .apply {
+                setAuthoritiesClaimName("role")
+                setAuthorityPrefix("ROLE_")
+            }
 
     override fun convert(jwt: Jwt): AbstractAuthenticationToken {
         return jwtGrantedAuthoritiesConverter.convert(jwt)
