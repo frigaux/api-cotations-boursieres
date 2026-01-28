@@ -1,8 +1,8 @@
 package fr.fabien.api.cotations
 
-import fr.fabien.jpa.cotations.Marche
-import fr.fabien.jpa.cotations.entity.Cours
-import fr.fabien.jpa.cotations.entity.Valeur
+import fr.fabien.jpa.cotations.enumerations.Marche
+import fr.fabien.jpa.cotations.entities.Cours
+import fr.fabien.jpa.cotations.entities.Valeur
 import fr.fabien.jpa.cotations.repository.RepositoryCours
 import fr.fabien.jpa.cotations.repository.RepositoryValeur
 import org.springframework.beans.factory.annotation.Autowired

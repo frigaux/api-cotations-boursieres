@@ -100,6 +100,7 @@ class ConfigurationSecurity(
                             .macAlgorithm(MacAlgorithm.from(serviceJWT.algorithm.name))
                             .build()
                     )
+                    // récupération des authorities (roles) depuis le jwt
                     jwt.jwtAuthenticationConverter(JwtAuthenticationConverter())
                 }
             }
