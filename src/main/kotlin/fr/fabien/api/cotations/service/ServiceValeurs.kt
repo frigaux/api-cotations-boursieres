@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 @Service
-class ServiceValeur(private val repositoryValeur: RepositoryValeur) {
+class ServiceValeurs(private val repositoryValeur: RepositoryValeur) {
 
     @Cacheable("getValeurs")
     fun getValeurs(): List<DtoValeur> {

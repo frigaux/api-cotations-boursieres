@@ -28,7 +28,7 @@ class RestControllerAuthentification(
             ApiResponse(
                 responseCode = "200", description = "\${api.authentification.operation.generateJwtToken.response[200]}",
                 content = [Content(
-                    mediaType = "application/json",
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = Schema(implementation = DtoJWTWrapper::class)
                 )]
             )

@@ -35,7 +35,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
             ApiResponse(
                 responseCode = "200", description = "\${api.cours.operation.getDerniersCours.response[200]}",
                 content = [Content(
-                    mediaType = "application/json",
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = Schema(implementation = DtoDctvWrapper::class)
                 )]
             )
@@ -54,7 +54,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
                 responseCode = "200",
                 description = "\${api.cours.operation.getDernierCoursPourUneValeur.response[200]}",
                 content = [Content(
-                    mediaType = "application/json",
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = Schema(implementation = DtoDcpuvCours::class)
                 )]
             ),
@@ -62,7 +62,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
                 responseCode = "404",
                 description = "\${api.cours.operation.getDernierCoursPourUneValeur.response[404]}",
                 content = [Content(
-                    mediaType = "application/json",
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = Schema(implementation = ClientError::class)
                 )]
             )
@@ -88,7 +88,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
                 responseCode = "200",
                 description = "\${api.cours.operation.getDerniersCoursPourUneValeur.response[200]}",
                 content = [Content(
-                    mediaType = "application/json",
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                     array = ArraySchema(schema = Schema(implementation = DtoDcpuvCoursAllege::class), minItems = 1)
                 )]
             )
@@ -122,7 +122,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
                 responseCode = "200",
                 description = "\${api.cours.operation.getDernieresMoyennesMobilesPourUneValeur.response[200]}",
                 content = [Content(
-                    mediaType = "application/json",
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                     array = ArraySchema(schema = Schema(implementation = DtoDmmpuvMM::class), minItems = 1)
                 )]
             )
@@ -167,7 +167,7 @@ class RestControllerCours(private val serviceCours: ServiceCours) {
                 responseCode = "200",
                 description = "\${api.cours.operation.getDerniersCoursPourPlusieursValeurs.response[200]}",
                 content = [Content(
-                    mediaType = "application/json",
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
                     array = ArraySchema(schema = Schema(implementation = DtoDcppvCours::class), minItems = 1)
                 )]
             )

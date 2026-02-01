@@ -1,6 +1,5 @@
-package fr.fabien.api.cotations.configuration.impl
+package fr.fabien.api.cotations.configuration.impl.cache.http
 
-import fr.fabien.api.cotations.configuration.impl.cache.CustomCacheControl
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration

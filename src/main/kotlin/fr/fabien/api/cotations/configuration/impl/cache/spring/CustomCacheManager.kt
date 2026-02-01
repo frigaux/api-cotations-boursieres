@@ -1,4 +1,4 @@
-package fr.fabien.api.cotations.configuration.impl.cache
+package fr.fabien.api.cotations.configuration.impl.cache.spring
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.Cache

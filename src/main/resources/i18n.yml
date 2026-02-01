@@ -56,6 +56,13 @@ api:
         response:
           200: "La valeur"
           404: "Ticker introuvable"
+  alertes:
+    name: "API des alertes"
+    operation:
+      getAlertes:
+        summary: "Récupère les alertes"
+        response:
+          200: "Les alertes"
 
 dto:
   DtoAuthentification:
@@ -119,3 +126,14 @@ dto:
       cloture: "cours à la clôture"
       volume: "volume échangé en nombre de titres"
       moyennesMobiles: "les moyennes mobiles des cours pour la valeur (le premier élément correspond à la moyenne mobile sur 1 jour, cad le cours du jour)"
+  DtoAlerte:
+    description: "Une alerte."
+    field:
+      id: "l'identifiant"
+      ticker: "le ticker"
+      libelle: "le libellé"
+      type: "le type de l'alerte"
+      expression: "l'expression qui définit l'alerte"
+      dateLimite: "la date limite de péremption de l'alerte"
+      declenchementUnique: "booléen indiquant si l'alerte peut être déclenchée à plusieurs reprises"
+      notification: "le moyen de notification de l'alerte"

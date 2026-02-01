@@ -1,4 +1,4 @@
-package fr.fabien.api.cotations.configuration.impl.cache
+package fr.fabien.api.cotations.configuration.impl.cache.http
 
 import org.springframework.http.CacheControl
 import java.time.LocalTime

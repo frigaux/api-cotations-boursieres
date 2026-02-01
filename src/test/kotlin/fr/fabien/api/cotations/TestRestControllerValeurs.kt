@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
-class TestRestControllerValeur(
+class TestRestControllerValeurs(
     @Autowired val mockMvc: MockMvc
 ) {
 

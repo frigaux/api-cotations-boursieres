@@ -1,4 +1,4 @@
-package fr.fabien.api.cotations.configuration.impl.cache
+package fr.fabien.api.cotations.configuration.impl.cache.spring
 
 import org.springframework.cache.Cache
 import java.time.LocalDateTime
