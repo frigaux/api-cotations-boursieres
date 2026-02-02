@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static fr.fabien.api.cotations.configuration.ConfigurationSecurity.SECURITY_SCHEME_NAME;
+import static fr.fabien.api.cotations.restcontroller.RestControllerAlertes.SECURITY_SCHEME_NAME;
 
 @Tag(name = "${api.alertes.name}")
 @RestController
 @RequestMapping("bourse/alertes")
 @SecurityRequirement(name = SECURITY_SCHEME_NAME)
 public class RestControllerAlertes {
+    public static final String SECURITY_SCHEME_NAME = "JWT Bearer Authentication";
+
     @Autowired
     private ServiceAlertes serviceAlertes;
 

@@ -1,6 +1,6 @@
 package fr.fabien.api.cotations.restcontroller
 
-import fr.fabien.api.cotations.configuration.ConfigurationSecurity.Companion.SECURITY_SCHEME_NAME
+import fr.fabien.api.cotations.restcontroller.RestControllerAlertes.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.restcontroller.dto.Dmmpuv.DtoDmmpuvMM
 import fr.fabien.api.cotations.restcontroller.dto.dcppv.DtoDcppvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours

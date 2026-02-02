@@ -2,6 +2,7 @@ package fr.fabien.api.cotations.configuration
 
 import fr.fabien.api.cotations.configuration.impl.JwtAuthenticationConverter
 import fr.fabien.api.cotations.configuration.impl.YamlPropertySourceFactory
+import fr.fabien.api.cotations.restcontroller.RestControllerAlertes.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.service.ServiceJWT
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Contact
@@ -48,11 +49,6 @@ class ConfigurationSecurity(
     private val serviceJWT: ServiceJWT,
     @Value("\${security.allowed.origins}") private val origins: List<String>
 ) {
-
-    companion object {
-        const val SECURITY_SCHEME_NAME: String = "JWT Bearer Authentication"
-    }
-
     @Bean
     @Profile("test")
     fun filterChainTest(http: HttpSecurity): SecurityFilterChain {
