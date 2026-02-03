@@ -53,6 +53,7 @@ class ConfigurationSecurity(
     @Profile("test")
     fun filterChainTest(http: HttpSecurity): SecurityFilterChain {
         http
+            .csrf { csrf -> csrf.disable() }
             .authorizeHttpRequests { authorize ->
                 authorize.anyRequest().permitAll()
             }
@@ -62,7 +63,8 @@ class ConfigurationSecurity(
     @Bean
     @Profile("!test")
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.csrf { csrf -> csrf.disable() }
+        http
+            .csrf { csrf -> csrf.disable() }
             // https://docs.spring.io/spring-security/reference/reactive/integrations/cors.html
             // https://developer.mozilla.org/fr/docs/Web/HTTP/Reference/Methods/OPTIONS
             .cors { cors ->

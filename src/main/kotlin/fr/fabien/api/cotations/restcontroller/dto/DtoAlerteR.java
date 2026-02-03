@@ -1,6 +1,7 @@
 package fr.fabien.api.cotations.restcontroller.dto;
 
 import fr.fabien.jpa.cotations.entities.Alerte;
+import fr.fabien.jpa.cotations.entities.Valeur;
 import fr.fabien.jpa.cotations.enumerations.TypeAlerte;
 import fr.fabien.jpa.cotations.enumerations.TypeNotification;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public record DtoAlerteR(
@@ -47,7 +49,7 @@ public record DtoAlerteR(
         @NotNull
         TypeNotification notification
 ) {
-    public static DtoAlerteR create(Alerte alerte) {
+    public static DtoAlerteR creerDepuisEntite(Alerte alerte) {
         return new DtoAlerteR(alerte.getId(),
                 alerte.getValeur().getTicker(),
                 alerte.getLibelle(),
@@ -56,5 +58,16 @@ public record DtoAlerteR(
                 alerte.getDateLimite() != null ? alerte.getDateLimite().format(DateTimeFormatter.ISO_LOCAL_DATE) : null,
                 alerte.getDeclenchementUnique(),
                 alerte.getNotification());
+    }
+
+    public static Alerte versEntite(Valeur valeur, DtoAlerteR dto) {
+        return new Alerte(valeur,
+                dto.libelle(),
+                dto.type(),
+                dto.expression(),
+                dto.dateLimite() != null ? LocalDate.parse(dto.dateLimite(), DateTimeFormatter.ISO_LOCAL_DATE) : null,
+                dto.declenchementUnique(),
+                dto.notification(),
+                null);
     }
 }

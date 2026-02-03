@@ -59,10 +59,14 @@ api:
   alertes:
     name: "API des alertes"
     operation:
-      getAlertes:
+      alertes:
         summary: "Récupère les alertes"
         response:
           200: "Les alertes"
+      creerAlerte:
+        summary: "Crée une alerte"
+        response:
+          200: "L'alerte crée"
 
 dto:
   DtoAuthentification:
