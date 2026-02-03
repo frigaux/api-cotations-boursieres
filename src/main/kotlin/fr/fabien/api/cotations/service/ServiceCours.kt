@@ -50,7 +50,7 @@ class ServiceCours(
                     it.moyennesMobiles
                 )
             }
-            ?: run { throw NotFoundException() }
+            ?: run { throw NotFoundException("ticker introuvable") }
     }
 
     @Cacheable("getDerniersCoursPourUneValeur")

@@ -46,7 +46,7 @@ public class TestRestControllerAlertes {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
                                 new Gson().toJson(new DtoAlerteR(null,
-                                        ConfigurationTest.VALEUR_GLE.getTicker(), "la clôture a franchi à la baisse le seuil de 20 euros",
+                                        "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
                                         TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 20", null, true,
                                         TypeNotification.SYSTEME
                                 ))))

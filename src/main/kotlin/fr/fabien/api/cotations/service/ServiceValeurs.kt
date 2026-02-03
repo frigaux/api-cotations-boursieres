@@ -19,6 +19,6 @@ class ServiceValeurs(private val repositoryValeur: RepositoryValeur) {
     fun getValeur(ticker: String): DtoValeur {
         return repositoryValeur.findByTicker(ticker)
             ?.let { valeur -> DtoValeur(valeur.ticker, valeur.marche, valeur.libelle) }
-            ?: run { throw NotFoundException() }
+            ?: run { throw NotFoundException("ticker introuvable") }
     }
 }
