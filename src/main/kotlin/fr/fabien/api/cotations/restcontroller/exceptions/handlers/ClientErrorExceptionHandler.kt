@@ -8,7 +8,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.sql.SQLIntegrityConstraintViolationException
 
@@ -26,16 +25,17 @@ class ClientErrorExceptionHandler {
 
     // validation des jakarta.validation.constraints par org.hibernate.validator.internal.engine.ValidatorImpl
     // voir : @Validated @RequestBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(
-        MethodArgumentNotValidException::class
-    )
-    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): Map<String, String> {
-        return e.bindingResult.allErrors
-            .associateBy(
-                { (it as FieldError).field },
-                { it.getDefaultMessage()!! }
-            )
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<ClientError> {
+        return ResponseEntity<ClientError>(
+            ClientError(
+                e.bindingResult.allErrors
+                .associateBy(
+                    { (it as FieldError).field },
+                    { it.getDefaultMessage()!! }
+                ).toString()),
+            HttpStatus.BAD_REQUEST
+        )
     }
 
     // traitement des exceptions étendant ClientErrorException
