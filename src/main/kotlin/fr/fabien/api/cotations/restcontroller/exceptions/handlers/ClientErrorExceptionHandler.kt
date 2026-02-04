@@ -1,5 +1,7 @@
-package fr.fabien.api.cotations.restcontroller.exception
+package fr.fabien.api.cotations.restcontroller.exceptions.handlers
 
+import fr.fabien.api.cotations.restcontroller.exceptions.ClientErrorException
+import org.springframework.dao.InvalidDataAccessApiUsageException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -13,7 +15,7 @@ import java.sql.SQLIntegrityConstraintViolationException
 
 @RestControllerAdvice
 class ClientErrorExceptionHandler {
-    // impossible de convertir un @RequestBody (exemple : valeur énumération inexistantes)
+    // impossible de convertir un @RequestBody (exemple : valeur énumération inexistante)
     @ExceptionHandler(HttpMessageNotReadableException::class)
     private fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ResponseEntity<ClientError> {
         return ResponseEntity<ClientError>(
@@ -36,8 +38,7 @@ class ClientErrorExceptionHandler {
             )
     }
 
-
-    // traitement de mes exceptions étendant ClientErrorException
+    // traitement des exceptions étendant ClientErrorException
     @ExceptionHandler(ClientErrorException::class)
     private fun handleClientErrorException(e: ClientErrorException): ResponseEntity<ClientError> {
         return ResponseEntity<ClientError>(
@@ -54,6 +55,17 @@ class ClientErrorExceptionHandler {
         return ResponseEntity<ClientError>(
             ClientError(e.message ?: e.errorCode.toString()),
             HttpStatus.CONFLICT
+        )
+    }
+
+    // traitement des exceptions levées lors de la persistence (exemple : @PrePersist avec ExpressionAlerteChecker)
+    @ExceptionHandler(
+        InvalidDataAccessApiUsageException::class
+    )
+    fun handleInvalidDataAccessApiUsageException(e: InvalidDataAccessApiUsageException): ResponseEntity<ClientError> {
+        return ResponseEntity<ClientError>(
+            ClientError(e.message ?: e.toString()),
+            HttpStatus.BAD_REQUEST
         )
     }
 }

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.Pattern
 
 @Schema(description = "\${dto.DtoDcpuvCours.description}")
 data class DtoDcpuvCours(
@@ -13,6 +14,7 @@ data class DtoDcpuvCours(
         format = "date", pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}"
     )
     @field:NotBlank
+    @field:Pattern(regexp = "$[0-9]{4}-[0-9]{2}-[0-9]{2}^", message = "format attendu (ISO8601) : YYYY-MM-DD")
     val date: String,
     @field:Schema(description = "\${dto.DtoDcpuvCours.field.ouverture}", example = "37.79", required = true)
     @field:NotNull

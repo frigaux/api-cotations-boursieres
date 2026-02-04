@@ -1,4 +1,4 @@
-package fr.fabien.api.cotations.restcontroller.exception
+package fr.fabien.api.cotations.restcontroller.exceptions.handlers
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank

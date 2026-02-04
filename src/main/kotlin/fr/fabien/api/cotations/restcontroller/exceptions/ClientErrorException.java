@@ -1,4 +1,4 @@
-package fr.fabien.api.cotations.restcontroller.exception;
+package fr.fabien.api.cotations.restcontroller.exceptions;
 
 import org.springframework.http.HttpStatus;
 

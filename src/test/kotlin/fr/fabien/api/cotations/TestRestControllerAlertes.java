@@ -72,4 +72,64 @@ public class TestRestControllerAlertes {
                                 ))))
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    @Order(2)
+    void given1AlerteAvecUneDateInvalideWhenPostThenReturn400() throws Exception {
+        mockMvc.perform(post("/bourse/alertes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(
+                                new Gson().toJson(new DtoAlerteR(null,
+                                        "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
+                                        TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 20", "NIMP", true,
+                                        TypeNotification.SYSTEME
+                                ))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Order(2)
+    void given1AlerteSansTypeWhenPostThenReturn400() throws Exception {
+        mockMvc.perform(post("/bourse/alertes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(
+                                new Gson().toJson(new DtoAlerteR(null,
+                                        "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
+                                        null, "CLOTURE(1) < 20", null, true,
+                                        TypeNotification.SYSTEME
+                                ))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Order(2)
+    void given1AlerteAvecUneExpressionErroneeWhenPostThenReturn400() throws Exception {
+        mockMvc.perform(post("/bourse/alertes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(
+                                new Gson().toJson(new DtoAlerteR(null,
+                                        "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
+                                        TypeAlerte.SEUIL_BAS, "NIMP", null, true,
+                                        TypeNotification.SYSTEME
+                                ))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Order(2)
+    void given1AlerteAvecUneExpressionLibreErroneeWhenPostThenReturn400() throws Exception {
+        mockMvc.perform(post("/bourse/alertes")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(
+                                new Gson().toJson(new DtoAlerteR(null,
+                                        "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
+                                        TypeAlerte.LIBRE, "NIMP", null, true,
+                                        TypeNotification.SYSTEME
+                                ))))
+                .andExpect(status().isBadRequest());
+    }
 }

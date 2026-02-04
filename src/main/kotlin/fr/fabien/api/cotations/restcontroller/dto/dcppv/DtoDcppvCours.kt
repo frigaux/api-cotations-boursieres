@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 
 @Schema(description = "\${dto.DtoDcppvCours.description}")
@@ -15,6 +16,7 @@ data class DtoDcppvCours(
         format = "date", pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}"
     )
     @field:NotBlank
+    @field:Pattern(regexp = "$[0-9]{4}-[0-9]{2}-[0-9]{2}^", message = "format attendu (ISO8601) : YYYY-MM-DD")
     val date: String,
     @field:Schema(description = "\${dto.DtoDcppvCours.field.ticker}", example = "GLE", required = true, pattern = "[A-Z0-9]{1,5}")
     @field:NotBlank

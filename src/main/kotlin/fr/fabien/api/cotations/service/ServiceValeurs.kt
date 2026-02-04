@@ -1,7 +1,7 @@
 package fr.fabien.api.cotations.service
 
 import fr.fabien.api.cotations.restcontroller.dto.DtoValeur
-import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
+import fr.fabien.api.cotations.restcontroller.exceptions.NotFoundException
 import fr.fabien.jpa.cotations.repository.RepositoryValeur
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service

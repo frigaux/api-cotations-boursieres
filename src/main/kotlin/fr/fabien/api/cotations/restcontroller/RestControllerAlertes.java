@@ -49,8 +49,6 @@ public class RestControllerAlertes {
         return serviceAlertes.alertes();
     }
 
-
-    // TODO : tests unitaires avec alertes invalides
     // TODO : documenter les 400 de @Validated et 404 de NotFoundException
     @Operation(summary = "${api.alertes.operation.creerAlerte.summary}")
     @ApiResponses(

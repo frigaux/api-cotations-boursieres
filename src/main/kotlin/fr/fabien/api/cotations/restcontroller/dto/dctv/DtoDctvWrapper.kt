@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.Pattern
 
 @Schema(description = "\${dto.DtoDctvWrapper.description}")
 data class DtoDctvWrapper(
@@ -12,6 +13,7 @@ data class DtoDctvWrapper(
         format = "date", pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}"
     )
     @field:NotBlank
+    @field:Pattern(regexp = "$[0-9]{4}-[0-9]{2}-[0-9]{2}^", message = "format attendu (ISO8601) : YYYY-MM-DD")
     val date: String,
     @field:ArraySchema(schema = Schema(implementation = DtoDctvCours::class), minItems = 1)
     @field:NotEmpty

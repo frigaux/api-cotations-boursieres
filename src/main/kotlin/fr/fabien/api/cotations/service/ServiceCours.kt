@@ -6,7 +6,7 @@ import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCoursAllege
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvCours
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
-import fr.fabien.api.cotations.restcontroller.exception.NotFoundException
+import fr.fabien.api.cotations.restcontroller.exceptions.NotFoundException
 import fr.fabien.jpa.cotations.entities.Cours
 import fr.fabien.jpa.cotations.entities.Valeur
 import fr.fabien.jpa.cotations.repository.RepositoryCours

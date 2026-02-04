@@ -6,7 +6,7 @@ import fr.fabien.api.cotations.restcontroller.dto.dcppv.DtoDcppvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCours
 import fr.fabien.api.cotations.restcontroller.dto.dcpuv.DtoDcpuvCoursAllege
 import fr.fabien.api.cotations.restcontroller.dto.dctv.DtoDctvWrapper
-import fr.fabien.api.cotations.restcontroller.exception.ClientError
+import fr.fabien.api.cotations.restcontroller.exceptions.handlers.ClientError
 import fr.fabien.api.cotations.service.ServiceCours
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter

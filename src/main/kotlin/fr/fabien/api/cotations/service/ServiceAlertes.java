@@ -1,7 +1,7 @@
 package fr.fabien.api.cotations.service;
 
 import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteC;
-import fr.fabien.api.cotations.restcontroller.exception.NotFoundException;
+import fr.fabien.api.cotations.restcontroller.exceptions.NotFoundException;
 import fr.fabien.jpa.cotations.entities.Alerte;
 import fr.fabien.jpa.cotations.entities.Valeur;
 import fr.fabien.jpa.cotations.repository.RepositoryAlerte;
