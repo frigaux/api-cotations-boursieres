@@ -15,8 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("test")
@@ -131,5 +130,40 @@ public class TestRestControllerAlertes {
                                         TypeNotification.SYSTEME
                                 ))))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Order(3)
+    void given1AlerteExistanteWhenPutThenReturnAlerteModifier() throws Exception {
+        mockMvc.perform(put("/bourse/alertes/3")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(
+                                new Gson().toJson(new DtoAlerte(
+                                        "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
+                                        TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 50", null, true,
+                                        TypeNotification.SMS
+                                ))))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(header().exists("Cache-Control"))
+                .andExpect(jsonPath("$").isMap())
+                .andExpect(jsonPath("$.notification").value("SMS"))
+                .andExpect(content().string("{\"ticker\":\"GLE\",\"libelle\":\"la clôture a franchi à la baisse le seuil de 20 euros\",\"type\":\"SEUIL_BAS\",\"expression\":\"CLOTURE(1) < 50\",\"dateLimite\":null,\"declenchementUnique\":true,\"notification\":\"SMS\",\"id\":3}"));
+    }
+
+    @Test
+    @Order(3)
+    void given1AlerteInexistanteWhenPutThenReturn404() throws Exception {
+        mockMvc.perform(put("/bourse/alertes/4")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(
+                                new Gson().toJson(new DtoAlerte(
+                                        "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
+                                        TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 50", null, true,
+                                        TypeNotification.SMS
+                                ))))
+                .andExpect(status().isNotFound());
     }
 }
