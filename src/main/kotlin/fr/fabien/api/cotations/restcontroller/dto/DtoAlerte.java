@@ -62,14 +62,25 @@ public class DtoAlerte {
         this.notification = notification;
     }
 
-    public static Alerte versEntite(Valeur valeur, DtoAlerte dto) {
+    public Alerte creerEntite(Valeur valeur) {
         return new Alerte(valeur,
-                dto.libelle,
-                dto.type,
-                dto.expression,
-                dto.dateLimite != null ? LocalDate.parse(dto.dateLimite, DateTimeFormatter.ISO_LOCAL_DATE) : null,
-                dto.declenchementUnique,
-                dto.notification,
+                this.libelle,
+                this.type,
+                this.expression,
+                this.dateLimite != null ? LocalDate.parse(this.dateLimite, DateTimeFormatter.ISO_LOCAL_DATE) : null,
+                this.declenchementUnique,
+                this.notification,
                 null);
+    }
+
+    public Alerte modifierEntite(Valeur valeur, Alerte alerte) {
+        alerte.setValeur(valeur);
+        alerte.setLibelle(this.libelle);
+        alerte.setType(this.type);
+        alerte.setExpression(this.expression);
+        alerte.setDateLimite(this.dateLimite != null ? LocalDate.parse(this.dateLimite, DateTimeFormatter.ISO_LOCAL_DATE) : null);
+        alerte.setDeclenchementUnique(this.declenchementUnique);
+        alerte.setNotification(this.notification);
+        return alerte;
     }
 }

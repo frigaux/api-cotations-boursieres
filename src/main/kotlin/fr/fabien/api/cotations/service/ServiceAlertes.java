@@ -30,8 +30,19 @@ public class ServiceAlertes {
     public DtoAlerteAvecId creerAlerte(DtoAlerte dtoAlerte) {
         Valeur valeur = Optional.ofNullable(repositoryValeur.findByTicker(dtoAlerte.ticker))
                 .orElseThrow(() -> new NotFoundException("ticker introuvable"));
-        Alerte alerte = DtoAlerte.versEntite(valeur, dtoAlerte);
+        Alerte alerte = dtoAlerte.creerEntite(valeur);
         alerte = repositoryAlerte.save(alerte);
         return new DtoAlerteAvecId(alerte);
+    }
+
+    public DtoAlerteAvecId modifierAlerte(Integer id, DtoAlerte dtoAlerte) {
+        Valeur valeur = Optional.ofNullable(repositoryValeur.findByTicker(dtoAlerte.ticker))
+                .orElseThrow(() -> new NotFoundException("ticker introuvable"));
+        Alerte alerteExistante = repositoryAlerte.findById(id).map(alerte ->
+                dtoAlerte.modifierEntite(valeur, alerte)
+        ).orElseThrow(() -> new NotFoundException("alerte introuvable"));
+        alerteExistante = repositoryAlerte.save(alerteExistante);
+        return new DtoAlerteAvecId(alerteExistante);
+
     }
 }

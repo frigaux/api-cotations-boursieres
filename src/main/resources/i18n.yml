@@ -70,6 +70,13 @@ api:
           404: "Ticker introuvable"
           400: "Alerte invalide (longueur maximale d'un champ non respectée, valeur d'énumération invalide, expression pour le type d'alerte invalide, ...)"
           409: "Contraintes non respectées (nom de l'alerte en doublon)"
+      modifierAlerte:
+        summary: "Modifier une alerte"
+        response:
+          200: "L'alerte modifiée"
+          404: "Adresse ou ticker introuvable"
+          400: "Alerte invalide (longueur maximale d'un champ non respectée, valeur d'énumération invalide, expression pour le type d'alerte invalide, ...)"
+          409: "Contraintes non respectées (nom de l'alerte en doublon)"
 
 dto:
   DtoAuthentification:

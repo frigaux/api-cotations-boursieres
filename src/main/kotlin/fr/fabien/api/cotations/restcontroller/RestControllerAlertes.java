@@ -95,4 +95,50 @@ public class RestControllerAlertes {
     private DtoAlerteAvecId creerAlerte(@Validated @RequestBody DtoAlerte dtoAlerte) {
         return serviceAlertes.creerAlerte(dtoAlerte);
     }
+
+    @Operation(summary = "${api.alertes.operation.modifierAlerte.summary}")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200", description = "${api.alertes.operation.modifierAlerte.response[200]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            array = @ArraySchema(schema = @Schema(implementation = DtoAlerteAvecId.class))
+                                    )
+                            }
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "${api.alertes.operation.modifierAlerte.response[404]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "${api.alertes.operation.modifierAlerte.response[400]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "${api.alertes.operation.modifierAlerte.response[409]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
+                    )
+            }
+    )
+    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    private DtoAlerteAvecId modifierAlerte(@PathVariable Integer id, @Validated @RequestBody DtoAlerte dtoAlerte) {
+        return serviceAlertes.modifierAlerte(id, dtoAlerte);
+    }
 }
