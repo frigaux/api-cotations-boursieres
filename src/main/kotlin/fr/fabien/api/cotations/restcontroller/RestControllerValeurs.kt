@@ -2,7 +2,7 @@ package fr.fabien.api.cotations.restcontroller
 
 import fr.fabien.api.cotations.restcontroller.RestControllerAlertes.SECURITY_SCHEME_NAME
 import fr.fabien.api.cotations.restcontroller.dto.DtoValeur
-import fr.fabien.api.cotations.restcontroller.exceptions.handlers.ClientError
+import fr.fabien.api.cotations.restcontroller.exceptions.handlers.DtoErreurHttp
 import fr.fabien.api.cotations.service.ServiceValeurs
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -57,7 +57,7 @@ class RestControllerValeurs(private val serviceValeurs: ServiceValeurs) {
                 responseCode = "404", description = "\${api.valeurs.operation.getValeur.response[404]}",
                 content = [Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                    schema = Schema(implementation = ClientError::class)
+                    schema = Schema(implementation = DtoErreurHttp::class)
                 )]
             )
         ]

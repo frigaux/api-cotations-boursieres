@@ -14,10 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Schema(description = "${dto.DtoAlerte.description}")
-public class DtoAlerteC {
-    @Schema(description = "${dto.DtoAlerte.field.id}", example = "1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-    public Integer id;
-
+public class DtoAlerte {
     @Schema(description = "${dto.DtoAlerte.field.ticker}", example = "GLE", requiredMode = Schema.RequiredMode.REQUIRED, pattern = "[A-Z0-9]{1,5}")
     @NotBlank
     @Size(max = 5)
@@ -41,7 +38,7 @@ public class DtoAlerteC {
             description = "${dto.DtoAlerte.field.dateLimite}", example = "2025-02-21", requiredMode = Schema.RequiredMode.NOT_REQUIRED,
             format = "date", pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}"
     )
-    @Pattern(regexp = "$[0-9]{4}-[0-9]{2}-[0-9]{2}^", message = "format attendu (ISO8601) : YYYY-MM-DD")
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}", message = "format attendu (ISO8601) : YYYY-MM-DD")
     public String dateLimite;
 
     @Schema(description = "${dto.DtoAlerte.field.declenchementUnique}", example = "true", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -52,23 +49,20 @@ public class DtoAlerteC {
     @NotNull
     public TypeNotification notification;
 
-    public DtoAlerteC() {
+    public DtoAlerte() {
     }
 
-    public DtoAlerteC(Alerte alerte) {
-        this.id = alerte.getId();
-        this.ticker = alerte.getValeur().getTicker();
-        this.libelle = alerte.getLibelle();
-        this.type = alerte.getType();
-        this.expression = alerte.getExpression();
-        if (alerte.getDateLimite() != null) {
-            this.dateLimite = alerte.getDateLimite().format(DateTimeFormatter.ISO_LOCAL_DATE);
-        }
-        this.declenchementUnique = alerte.getDeclenchementUnique();
-        this.notification = alerte.getNotification();
+    public DtoAlerte(String ticker, String libelle, TypeAlerte type, String expression, String dateLimite, boolean declenchementUnique, TypeNotification notification) {
+        this.ticker = ticker;
+        this.libelle = libelle;
+        this.type = type;
+        this.expression = expression;
+        this.dateLimite = dateLimite;
+        this.declenchementUnique = declenchementUnique;
+        this.notification = notification;
     }
 
-    public static Alerte versEntite(Valeur valeur, DtoAlerteC dto) {
+    public static Alerte versEntite(Valeur valeur, DtoAlerte dto) {
         return new Alerte(valeur,
                 dto.libelle,
                 dto.type,

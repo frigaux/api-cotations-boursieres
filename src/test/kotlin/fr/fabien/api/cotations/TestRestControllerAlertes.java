@@ -1,7 +1,7 @@
 package fr.fabien.api.cotations;
 
 import com.nimbusds.jose.shaded.gson.Gson;
-import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteR;
+import fr.fabien.api.cotations.restcontroller.dto.DtoAlerte;
 import fr.fabien.jpa.cotations.enumerations.TypeAlerte;
 import fr.fabien.jpa.cotations.enumerations.TypeNotification;
 import org.junit.jupiter.api.MethodOrderer;
@@ -45,7 +45,7 @@ public class TestRestControllerAlertes {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
-                                new Gson().toJson(new DtoAlerteR(null,
+                                new Gson().toJson(new DtoAlerte(
                                         "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
                                         TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 20", null, true,
                                         TypeNotification.SYSTEME
@@ -55,7 +55,7 @@ public class TestRestControllerAlertes {
                 .andExpect(header().exists("Cache-Control"))
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.notification").value("SYSTEME"))
-                .andExpect(content().string("{\"id\":3,\"ticker\":\"GLE\",\"libelle\":\"la clôture a franchi à la baisse le seuil de 20 euros\",\"type\":\"SEUIL_BAS\",\"expression\":\"CLOTURE(1) < 20\",\"dateLimite\":null,\"declenchementUnique\":true,\"notification\":\"SYSTEME\"}"));
+                .andExpect(content().string("{\"ticker\":\"GLE\",\"libelle\":\"la clôture a franchi à la baisse le seuil de 20 euros\",\"type\":\"SEUIL_BAS\",\"expression\":\"CLOTURE(1) < 20\",\"dateLimite\":null,\"declenchementUnique\":true,\"notification\":\"SYSTEME\",\"id\":3}"));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class TestRestControllerAlertes {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
-                                new Gson().toJson(new DtoAlerteR(null,
+                                new Gson().toJson(new DtoAlerte(
                                         "NIMP", "la clôture a franchi à la baisse le seuil de 20 euros",
                                         TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 20", null, true,
                                         TypeNotification.SYSTEME
@@ -80,7 +80,7 @@ public class TestRestControllerAlertes {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
-                                new Gson().toJson(new DtoAlerteR(null,
+                                new Gson().toJson(new DtoAlerte(
                                         "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
                                         TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 20", "NIMP", true,
                                         TypeNotification.SYSTEME
@@ -95,7 +95,7 @@ public class TestRestControllerAlertes {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
-                                new Gson().toJson(new DtoAlerteR(null,
+                                new Gson().toJson(new DtoAlerte(
                                         "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
                                         null, "CLOTURE(1) < 20", null, true,
                                         TypeNotification.SYSTEME
@@ -110,7 +110,7 @@ public class TestRestControllerAlertes {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
-                                new Gson().toJson(new DtoAlerteR(null,
+                                new Gson().toJson(new DtoAlerte(
                                         "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
                                         TypeAlerte.SEUIL_BAS, "NIMP", null, true,
                                         TypeNotification.SYSTEME
@@ -125,7 +125,7 @@ public class TestRestControllerAlertes {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
                         .content(
-                                new Gson().toJson(new DtoAlerteR(null,
+                                new Gson().toJson(new DtoAlerte(
                                         "GLE", "la clôture a franchi à la baisse le seuil de 20 euros",
                                         TypeAlerte.LIBRE, "NIMP", null, true,
                                         TypeNotification.SYSTEME

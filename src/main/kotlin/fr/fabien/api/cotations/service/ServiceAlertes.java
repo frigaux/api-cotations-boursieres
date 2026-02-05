@@ -1,6 +1,7 @@
 package fr.fabien.api.cotations.service;
 
-import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteC;
+import fr.fabien.api.cotations.restcontroller.dto.DtoAlerte;
+import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteAvecId;
 import fr.fabien.api.cotations.restcontroller.exceptions.NotFoundException;
 import fr.fabien.jpa.cotations.entities.Alerte;
 import fr.fabien.jpa.cotations.entities.Valeur;
@@ -19,18 +20,18 @@ public class ServiceAlertes {
     @Autowired
     private RepositoryAlerte repositoryAlerte;
 
-    public List<DtoAlerteC> alertes() {
+    public List<DtoAlerteAvecId> alertes() {
         return repositoryAlerte.findAll()
                 .stream()
-                .map(DtoAlerteC::new)
+                .map(DtoAlerteAvecId::new)
                 .toList();
     }
 
-    public DtoAlerteC creerAlerte(DtoAlerteC dtoAlerte) {
+    public DtoAlerteAvecId creerAlerte(DtoAlerte dtoAlerte) {
         Valeur valeur = Optional.ofNullable(repositoryValeur.findByTicker(dtoAlerte.ticker))
                 .orElseThrow(() -> new NotFoundException("ticker introuvable"));
-        Alerte alerte = DtoAlerteC.versEntite(valeur, dtoAlerte);
+        Alerte alerte = DtoAlerte.versEntite(valeur, dtoAlerte);
         alerte = repositoryAlerte.save(alerte);
-        return new DtoAlerteC(alerte);
+        return new DtoAlerteAvecId(alerte);
     }
 }

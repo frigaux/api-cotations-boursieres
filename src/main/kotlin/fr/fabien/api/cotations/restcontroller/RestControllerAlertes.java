@@ -1,6 +1,8 @@
 package fr.fabien.api.cotations.restcontroller;
 
-import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteC;
+import fr.fabien.api.cotations.restcontroller.dto.DtoAlerte;
+import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteAvecId;
+import fr.fabien.api.cotations.restcontroller.exceptions.handlers.DtoErreurHttp;
 import fr.fabien.api.cotations.service.ServiceAlertes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -12,7 +14,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,18 +39,17 @@ public class RestControllerAlertes {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            array = @ArraySchema(schema = @Schema(implementation = DtoAlerteC.class))
+                                            array = @ArraySchema(schema = @Schema(implementation = DtoAlerteAvecId.class))
                                     )
                             }
                     )
             }
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    private List<DtoAlerteC> alertes(Authentication authentication) {
+    private List<DtoAlerteAvecId> alertes() {
         return serviceAlertes.alertes();
     }
 
-    // TODO : documenter les 400 de @Validated et 404 de NotFoundException
     @Operation(summary = "${api.alertes.operation.creerAlerte.summary}")
     @ApiResponses(
             value = {
@@ -58,14 +58,41 @@ public class RestControllerAlertes {
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                            array = @ArraySchema(schema = @Schema(implementation = DtoAlerteC.class))
+                                            array = @ArraySchema(schema = @Schema(implementation = DtoAlerteAvecId.class))
                                     )
                             }
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "${api.alertes.operation.creerAlerte.response[404]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "${api.alertes.operation.creerAlerte.response[400]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
+                    ),
+                    @ApiResponse(
+                            responseCode = "409",
+                            description = "${api.alertes.operation.creerAlerte.response[409]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
                     )
             }
     )
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    private DtoAlerteC creerAlerte(@Validated @RequestBody DtoAlerteC dtoAlerte) {
+    private DtoAlerteAvecId creerAlerte(@Validated @RequestBody DtoAlerte dtoAlerte) {
         return serviceAlertes.creerAlerte(dtoAlerte);
     }
 }

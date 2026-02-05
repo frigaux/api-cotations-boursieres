@@ -67,6 +67,9 @@ api:
         summary: "Crée une alerte"
         response:
           200: "L'alerte crée"
+          404: "Ticker introuvable"
+          400: "Alerte invalide (longueur maximale d'un champ non respectée, valeur d'énumération invalide, expression pour le type d'alerte invalide, ...)"
+          409: "Contraintes non respectées (nom de l'alerte en doublon)"
 
 dto:
   DtoAuthentification:
@@ -133,7 +136,6 @@ dto:
   DtoAlerte:
     description: "Une alerte."
     field:
-      id: "l'identifiant"
       ticker: "le ticker"
       libelle: "le libellé"
       type: "le type de l'alerte"
@@ -141,3 +143,11 @@ dto:
       dateLimite: "la date limite de péremption de l'alerte"
       declenchementUnique: "booléen indiquant si l'alerte peut être déclenchée à plusieurs reprises"
       notification: "le moyen de notification de l'alerte"
+  DtoAlerteAvecId:
+    description: "Une alerte avec son identifiant."
+    field:
+      id: "l'identifiant"
+  DtoErreurHttp:
+    description: "Description d'une erreur HTTP."
+    field:
+      details: "details concernant l'erreur"

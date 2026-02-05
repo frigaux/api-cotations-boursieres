@@ -13,7 +13,7 @@ data class DtoDctvWrapper(
         format = "date", pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}"
     )
     @field:NotBlank
-    @field:Pattern(regexp = "$[0-9]{4}-[0-9]{2}-[0-9]{2}^", message = "format attendu (ISO8601) : YYYY-MM-DD")
+    @field:Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}", message = "format attendu (ISO8601) : YYYY-MM-DD")
     val date: String,
     @field:ArraySchema(schema = Schema(implementation = DtoDctvCours::class), minItems = 1)
     @field:NotEmpty

@@ -13,36 +13,36 @@ import java.sql.SQLIntegrityConstraintViolationException
 
 
 @RestControllerAdvice
-class ClientErrorExceptionHandler {
-    // impossible de convertir un @RequestBody (exemple : valeur énumération inexistante)
+class ExceptionsHandler {
+    // impossible de convertir un @RequestBody (valeur énumération inexistante, ...)
     @ExceptionHandler(HttpMessageNotReadableException::class)
-    private fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ResponseEntity<ClientError> {
-        return ResponseEntity<ClientError>(
-            ClientError(e.message ?: e.toString()),
+    private fun handleHttpMessageNotReadableException(e: HttpMessageNotReadableException): ResponseEntity<DtoErreurHttp> {
+        return ResponseEntity<DtoErreurHttp>(
+            DtoErreurHttp(e.message ?: e.toString()),
             HttpStatus.BAD_REQUEST
         )
     }
 
     // validation des jakarta.validation.constraints par org.hibernate.validator.internal.engine.ValidatorImpl
-    // voir : @Validated @RequestBody
+    // (@Validated @RequestBody)
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<ClientError> {
-        return ResponseEntity<ClientError>(
-            ClientError(
+    fun handleMethodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<DtoErreurHttp> {
+        return ResponseEntity<DtoErreurHttp>(
+            DtoErreurHttp(
                 e.bindingResult.allErrors
-                .associateBy(
-                    { (it as FieldError).field },
-                    { it.getDefaultMessage()!! }
-                ).toString()),
+                    .associateBy(
+                        { (it as FieldError).field },
+                        { it.getDefaultMessage()!! }
+                    ).toString()),
             HttpStatus.BAD_REQUEST
         )
     }
 
     // traitement des exceptions étendant ClientErrorException
     @ExceptionHandler(ClientErrorException::class)
-    private fun handleClientErrorException(e: ClientErrorException): ResponseEntity<ClientError> {
-        return ResponseEntity<ClientError>(
-            ClientError(e.message ?: e.httpStatus.name),
+    private fun handleClientErrorException(e: ClientErrorException): ResponseEntity<DtoErreurHttp> {
+        return ResponseEntity<DtoErreurHttp>(
+            DtoErreurHttp(e.message ?: e.httpStatus.name),
             e.httpStatus
         )
     }
@@ -51,9 +51,9 @@ class ClientErrorExceptionHandler {
     @ExceptionHandler(
         SQLIntegrityConstraintViolationException::class
     )
-    fun handleSQLIntegrityConstraintViolationException(e: SQLIntegrityConstraintViolationException): ResponseEntity<ClientError> {
-        return ResponseEntity<ClientError>(
-            ClientError(e.message ?: e.errorCode.toString()),
+    fun handleSQLIntegrityConstraintViolationException(e: SQLIntegrityConstraintViolationException): ResponseEntity<DtoErreurHttp> {
+        return ResponseEntity<DtoErreurHttp>(
+            DtoErreurHttp(e.message ?: e.errorCode.toString()),
             HttpStatus.CONFLICT
         )
     }
@@ -62,9 +62,9 @@ class ClientErrorExceptionHandler {
     @ExceptionHandler(
         InvalidDataAccessApiUsageException::class
     )
-    fun handleInvalidDataAccessApiUsageException(e: InvalidDataAccessApiUsageException): ResponseEntity<ClientError> {
-        return ResponseEntity<ClientError>(
-            ClientError(e.message ?: e.toString()),
+    fun handleInvalidDataAccessApiUsageException(e: InvalidDataAccessApiUsageException): ResponseEntity<DtoErreurHttp> {
+        return ResponseEntity<DtoErreurHttp>(
+            DtoErreurHttp(e.message ?: e.toString()),
             HttpStatus.BAD_REQUEST
         )
     }
