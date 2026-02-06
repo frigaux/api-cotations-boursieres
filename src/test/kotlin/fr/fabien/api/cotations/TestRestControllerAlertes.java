@@ -49,7 +49,7 @@ public class TestRestControllerAlertes {
                                         TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 20", null, true,
                                         TypeNotification.SYSTEME
                                 ))))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(header().exists("Cache-Control"))
                 .andExpect(jsonPath("$").isMap())
@@ -164,6 +164,20 @@ public class TestRestControllerAlertes {
                                         TypeAlerte.SEUIL_BAS, "CLOTURE(1) < 50", null, true,
                                         TypeNotification.SMS
                                 ))))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @Order(4)
+    void given1AlerteExistanteWhenDeleteThenReturn204() throws Exception {
+        mockMvc.perform(delete("/bourse/alertes/3"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @Order(4)
+    void given1AlerteInexistanteWhenDeleteThenReturn404() throws Exception {
+        mockMvc.perform(delete("/bourse/alertes/4"))
                 .andExpect(status().isNotFound());
     }
 }

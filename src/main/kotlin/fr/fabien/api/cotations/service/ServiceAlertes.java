@@ -45,4 +45,10 @@ public class ServiceAlertes {
         return new DtoAlerteAvecId(alerteExistante);
 
     }
+
+    public void supprimerAlerte(Integer id) {
+        Alerte alerte = repositoryAlerte.findById(id)
+                .orElseThrow(() -> new NotFoundException("alerte introuvable"));
+        repositoryAlerte.delete(alerte);
+    }
 }

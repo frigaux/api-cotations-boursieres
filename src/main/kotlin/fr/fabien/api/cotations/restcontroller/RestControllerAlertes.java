@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,7 @@ public class RestControllerAlertes {
     @ApiResponses(
             value = {
                     @ApiResponse(
-                            responseCode = "200", description = "${api.alertes.operation.creerAlerte.response[200]}",
+                            responseCode = "201", description = "${api.alertes.operation.creerAlerte.response[201]}",
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -92,6 +93,7 @@ public class RestControllerAlertes {
             }
     )
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
     private DtoAlerteAvecId creerAlerte(@Validated @RequestBody DtoAlerte dtoAlerte) {
         return serviceAlertes.creerAlerte(dtoAlerte);
     }
@@ -140,5 +142,28 @@ public class RestControllerAlertes {
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
     private DtoAlerteAvecId modifierAlerte(@PathVariable Integer id, @Validated @RequestBody DtoAlerte dtoAlerte) {
         return serviceAlertes.modifierAlerte(id, dtoAlerte);
+    }
+
+    @Operation(summary = "${api.alertes.operation.supprimerAlerte.summary}")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "204", description = "${api.alertes.operation.supprimerAlerte.response[204]}"
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "${api.alertes.operation.supprimerAlerte.response[404]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
+                    )
+            }
+    )
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    private void supprimerAlerte(@PathVariable Integer id) {
+        serviceAlertes.supprimerAlerte(id);
     }
 }

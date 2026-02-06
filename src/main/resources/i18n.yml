@@ -66,7 +66,7 @@ api:
       creerAlerte:
         summary: "Crée une alerte"
         response:
-          200: "L'alerte crée"
+          201: "L'alerte crée"
           404: "Ticker introuvable"
           400: "Alerte invalide (longueur maximale d'un champ non respectée, valeur d'énumération invalide, expression pour le type d'alerte invalide, ...)"
           409: "Contraintes non respectées (nom de l'alerte en doublon)"
@@ -74,9 +74,14 @@ api:
         summary: "Modifier une alerte"
         response:
           200: "L'alerte modifiée"
-          404: "Adresse ou ticker introuvable"
+          404: "Alerte ou ticker introuvable"
           400: "Alerte invalide (longueur maximale d'un champ non respectée, valeur d'énumération invalide, expression pour le type d'alerte invalide, ...)"
           409: "Contraintes non respectées (nom de l'alerte en doublon)"
+      supprimerAlerte:
+        summary: "Supprimer une alerte"
+        response:
+          204: "L'alerte a été supprimée"
+          404: "Alerte introuvable"
 
 dto:
   DtoAuthentification:
