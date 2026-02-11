@@ -87,7 +87,7 @@ class ConfigurationSecurity(
                     .requestMatchers("/bourse/authentification").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()
                     .requestMatchers("/v3/**").permitAll()
-                    .requestMatchers("/bourse/**").hasRole("ANONYMOUS")
+                    .requestMatchers("/bourse/**").hasRole("ANONYME")
                     .anyRequest().authenticated()
             }
             .oauth2ResourceServer { oauth2 ->

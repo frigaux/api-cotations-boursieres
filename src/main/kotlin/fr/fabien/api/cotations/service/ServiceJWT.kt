@@ -39,7 +39,7 @@ class ServiceJWT(
             .issueTime(Date.from(issuedAt))
             .expirationTime(Date.from(expirationTime))
             .claim("identifiant", dtoAuthentification.identifiant)
-            .claim("role", "ANONYMOUS")
+            .claim("role", "ANONYME")
             .build()
     }
 
