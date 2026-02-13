@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ServiceAlertes {
@@ -22,6 +23,22 @@ public class ServiceAlertes {
 
     public List<DtoAlerteAvecId> alertes() {
         return repositoryAlerte.findAll()
+                .stream()
+                .map(DtoAlerteAvecId::new)
+                .toList();
+    }
+
+    public List<DtoAlerteAvecId> alertesPourUneValeur(String ticker) {
+        Valeur valeur = Optional.ofNullable(repositoryValeur.findByTicker(ticker))
+                .orElseThrow(() -> new NotFoundException("ticker introuvable"));
+        return repositoryAlerte.findByValeurOrderByDateLimiteDesc(valeur)
+                .stream()
+                .map(DtoAlerteAvecId::new)
+                .toList();
+    }
+
+    public List<DtoAlerteAvecId> alertesPourPlusieursValeurs(Set<String> tickers) {
+        return repositoryAlerte.queryByTickers(tickers)
                 .stream()
                 .map(DtoAlerteAvecId::new)
                 .toList();

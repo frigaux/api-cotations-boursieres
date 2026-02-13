@@ -63,6 +63,19 @@ api:
         summary: "Récupère les alertes"
         response:
           200: "Les alertes"
+      alertesPourUneValeur:
+        summary: "Récupère les alertes pour une valeur identifiée par son ticker"
+        parameter:
+          ticker: "ticker identifiant la valeur"
+        response:
+          200: "Les alertes"
+          404: "Ticker introuvable"
+      alertesPourPlusieursValeurs:
+        summary: "Récupère les alertes pour plusieurs valeurs identifiées par leur ticker"
+        parameter:
+          tickers: "tickers identifiant les valeurs"
+        response:
+          200: "Les alertes"
       creerAlerte:
         summary: "Crée une alerte"
         response:
@@ -72,6 +85,8 @@ api:
           409: "Contraintes non respectées (nom de l'alerte en doublon)"
       modifierAlerte:
         summary: "Modifier une alerte"
+        parameter:
+          id: "identifiant de l'alerte à modifier"
         response:
           200: "L'alerte modifiée"
           404: "Alerte ou ticker introuvable"
@@ -79,6 +94,8 @@ api:
           409: "Contraintes non respectées (nom de l'alerte en doublon)"
       supprimerAlerte:
         summary: "Supprimer une alerte"
+        parameter:
+          id: "identifiant de l'alerte à supprimer"
         response:
           204: "L'alerte a été supprimée"
           404: "Alerte introuvable"

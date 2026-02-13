@@ -10,7 +10,7 @@ data class DtoAuthentification(
     @field:NotBlank
     @field:Size(min = 3, max = 20)
     val identifiant: String,
-    @field:Schema(description = "\${dto.DtoAuthentification.field.motDePasse}", example = "anonyme", required = true)
+    @field:Schema(description = "\${dto.DtoAuthentification.field.motDePasse}", example = "anonymous", required = true)
     @field:NotBlank
     @field:Size(min = 8, max = 20)
     val motDePasse: String

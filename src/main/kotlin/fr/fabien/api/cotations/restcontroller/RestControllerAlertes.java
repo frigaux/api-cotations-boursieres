@@ -5,6 +5,7 @@ import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteAvecId;
 import fr.fabien.api.cotations.restcontroller.exceptions.handlers.DtoErreurHttp;
 import fr.fabien.api.cotations.service.ServiceAlertes;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static fr.fabien.api.cotations.restcontroller.RestControllerAlertes.SECURITY_SCHEME_NAME;
 
@@ -49,6 +51,65 @@ public class RestControllerAlertes {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     private List<DtoAlerteAvecId> alertes() {
         return serviceAlertes.alertes();
+    }
+
+    @Operation(summary = "${api.alertes.operation.alertesPourUneValeur.summary}")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200", description = "${api.alertes.operation.alertesPourUneValeur.response[200]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            array = @ArraySchema(schema = @Schema(implementation = DtoAlerteAvecId.class))
+                                    )
+                            }
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "${api.alertes.operation.alertesPourUneValeur.response[404]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            schema = @Schema(implementation = DtoErreurHttp.class)
+                                    )}
+                    )
+            }
+    )
+    @GetMapping(path = "{ticker}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    private List<DtoAlerteAvecId> alertesPourUneValeur(
+            @Parameter(
+                    description = "${api.alertes.operation.alertesPourUneValeur.parameter.ticker}",
+                    required = true,
+                    example = "GLE"
+            )
+            @PathVariable String ticker) {
+        return serviceAlertes.alertesPourUneValeur(ticker);
+    }
+
+    @Operation(summary = "${api.alertes.operation.alertesPourPlusieursValeurs.summary}")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200", description = "${api.alertes.operation.alertesPourPlusieursValeurs.response[200]}",
+                            content = {
+                                    @Content(
+                                            mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                            array = @ArraySchema(schema = @Schema(implementation = DtoAlerteAvecId.class))
+                                    )
+                            }
+                    )
+            }
+    )
+    @GetMapping(path = "tickers", produces = {MediaType.APPLICATION_JSON_VALUE})
+    private List<DtoAlerteAvecId> alertesPourPlusieursValeurs(
+            @Parameter(
+                    description = "${api.alertes.operation.alertesPourPlusieursValeurs.parameter.tickers}",
+                    required = true,
+                    example = "GLE, BNP"
+            )
+            @RequestParam Set<String> tickers) {
+        return serviceAlertes.alertesPourPlusieursValeurs(tickers);
     }
 
     @Operation(summary = "${api.alertes.operation.creerAlerte.summary}")
@@ -139,8 +200,15 @@ public class RestControllerAlertes {
                     )
             }
     )
-    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    private DtoAlerteAvecId modifierAlerte(@PathVariable Integer id, @Validated @RequestBody DtoAlerte dtoAlerte) {
+    @PutMapping(path = "{id}", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    private DtoAlerteAvecId modifierAlerte(@PathVariable
+                                           @Parameter(
+                                                   description = "${api.alertes.operation.modifierAlerte.parameter.id}",
+                                                   required = true,
+                                                   example = "1"
+                                           )
+                                           Integer id,
+                                           @Validated @RequestBody DtoAlerte dtoAlerte) {
         return serviceAlertes.modifierAlerte(id, dtoAlerte);
     }
 
@@ -161,9 +229,15 @@ public class RestControllerAlertes {
                     )
             }
     )
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void supprimerAlerte(@PathVariable Integer id) {
+    private void supprimerAlerte(@PathVariable
+                                 @Parameter(
+                                         description = "${api.alertes.operation.supprimerAlerte.parameter.id}",
+                                         required = true,
+                                         example = "1"
+                                 )
+                                 Integer id) {
         serviceAlertes.supprimerAlerte(id);
     }
 }

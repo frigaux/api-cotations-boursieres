@@ -67,7 +67,7 @@ class TestRestControllerCours(
 
     @Test
     fun `Given 2 valeurs avec 2 cours when request getDerniersCoursPourPlusieursValeurs then return 2 cours`() {
-        mockMvc.perform(get("/bourse/cours/tickers/4?tickers=GLE,BNP").accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/bourse/cours/tickers/4").param("tickers", "GLE,BNP").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$").isArray())
