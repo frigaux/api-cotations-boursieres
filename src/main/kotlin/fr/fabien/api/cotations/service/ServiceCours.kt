@@ -79,8 +79,9 @@ class ServiceCours(
 
     @Cacheable("getDerniersCoursPourPlusieursValeurs")
     fun getDerniersCoursPourPlusieursValeurs(tickers: Set<String>, limit: Int): List<DtoDcppvCours> {
+        val dateMin = repositoryCours.queryDateByOffset(tickers, limit.dec()) ?: LocalDate.EPOCH;
         val coursAllegeByTicker: Map<String, List<DtoDcpuvCoursAllege>> =
-            repositoryCours.queryLatestLightByTickers(tickers, limit * tickers.size)
+            repositoryCours.queryLatestLightByTickers(tickers, dateMin)
                 .groupBy({ objects -> objects[0] as String }, { objects ->
                     DtoDcpuvCoursAllege(
                         (objects[1] as LocalDate).format(DateTimeFormatter.ISO_LOCAL_DATE),
