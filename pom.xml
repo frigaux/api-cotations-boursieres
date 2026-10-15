@@ -129,6 +129,12 @@
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
+        <!-- Monitoring tools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- Driver Mysql (profil != test) -->
         <dependency>
             <groupId>com.mysql</groupId>

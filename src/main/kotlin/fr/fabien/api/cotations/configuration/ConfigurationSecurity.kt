@@ -86,6 +86,7 @@ class ConfigurationSecurity(
                 authorize
                     .requestMatchers("/bourse/authentification").permitAll()
                     .requestMatchers("/swagger-ui/**").permitAll()
+                    .requestMatchers("/actuator/**").permitAll()
                     .requestMatchers("/v3/**").permitAll()
                     .requestMatchers("/bourse/**").hasRole("ANONYME")
                     .anyRequest().authenticated()
