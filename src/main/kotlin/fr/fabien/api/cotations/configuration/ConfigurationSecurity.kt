@@ -95,7 +95,7 @@ class ConfigurationSecurity(
                     jwt.decoder(
                         NimbusJwtDecoder
                             .withSecretKey(serviceJWT.secretKey)
-                            .macAlgorithm(MacAlgorithm.from(serviceJWT.algorithm.name))
+                            .macAlgorithm(MacAlgorithm.valueOf(serviceJWT.algorithm.name))
                             .build()
                     )
                     // récupération des authorities (roles) depuis le jwt

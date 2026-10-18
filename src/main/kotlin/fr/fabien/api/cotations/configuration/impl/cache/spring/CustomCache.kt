@@ -30,11 +30,11 @@ class CustomCache(private val name: String, private val heureCacheExpire: Int) :
             }
     }
 
-    override fun <T : Any?> get(key: Any, type: Class<T?>?): T? {
+    override fun <T : Any> get(key: Any, type: Class<T>?): T? {
         TODO("Not yet implemented")
     }
 
-    override fun <T : Any?> get(key: Any, valueLoader: Callable<T?>): T? {
+    override fun <T : Any> get(key: Any, valueLoader: Callable<T>): T? {
         TODO("Not yet implemented")
     }
 

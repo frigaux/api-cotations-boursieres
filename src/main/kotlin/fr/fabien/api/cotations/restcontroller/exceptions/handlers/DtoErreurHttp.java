@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Schema(description = "${dto.DtoErreurHttp.description}")
 public class DtoErreurHttp {
-    @Schema(description = "${dto.DtoErreurHttp.field.details}", example = "description de l'erreur", required = true)
+    @Schema(description = "${dto.DtoErreurHttp.field.details}", example = "description de l'erreur", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotBlank
     public String details;
 

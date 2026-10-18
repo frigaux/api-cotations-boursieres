@@ -7,6 +7,6 @@ import org.springframework.core.io.support.PropertySourceFactory
 
 class YamlPropertySourceFactory : PropertySourceFactory {
     override fun createPropertySource(name: String?, resource: EncodedResource): PropertySource<*> {
-        return YamlPropertySourceLoader().load(resource.resource.filename, resource.resource)[0]
+        return YamlPropertySourceLoader().load(resource.resource.filename ?: "missing", resource.resource)[0]
     }
 }

@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -66,7 +66,7 @@ public class TestRestControllerAlertes {
                 .andExpect(header().exists("Cache-Control"))
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.notification").value("SYSTEME"))
-                .andExpect(content().string("{\"ticker\":\"GLE\",\"libelle\":\"la clôture a franchi à la baisse le seuil de 20 euros\",\"type\":\"SEUIL_BAS\",\"expression\":\"CLOTURE(1) < 20\",\"dateLimite\":null,\"declenchementUnique\":true,\"notification\":\"SYSTEME\",\"id\":3}"));
+                .andExpect(content().json("{\"ticker\":\"GLE\",\"libelle\":\"la clôture a franchi à la baisse le seuil de 20 euros\",\"type\":\"SEUIL_BAS\",\"expression\":\"CLOTURE(1) < 20\",\"dateLimite\":null,\"declenchementUnique\":true,\"notification\":\"SYSTEME\",\"id\":3}"));
     }
 
     @Test
@@ -161,7 +161,7 @@ public class TestRestControllerAlertes {
                 .andExpect(header().exists("Cache-Control"))
                 .andExpect(jsonPath("$").isMap())
                 .andExpect(jsonPath("$.notification").value("SMS"))
-                .andExpect(content().string("{\"ticker\":\"GLE\",\"libelle\":\"la clôture a franchi à la baisse le seuil de 20 euros\",\"type\":\"SEUIL_BAS\",\"expression\":\"CLOTURE(1) < 50\",\"dateLimite\":null,\"declenchementUnique\":true,\"notification\":\"SMS\",\"id\":3}"));
+                .andExpect(content().json("{\"ticker\":\"GLE\",\"libelle\":\"la clôture a franchi à la baisse le seuil de 20 euros\",\"type\":\"SEUIL_BAS\",\"expression\":\"CLOTURE(1) < 50\",\"dateLimite\":null,\"declenchementUnique\":true,\"notification\":\"SMS\",\"id\":3}"));
     }
 
     @Test
