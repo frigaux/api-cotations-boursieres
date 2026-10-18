@@ -34,7 +34,7 @@
         <jupiter.version>6.0.3</jupiter.version>
         <kotlin.logging.version>3.0.5</kotlin.logging.version>
         <mysql.version>9.6.0</mysql.version>
-        <h2.version>2.3.232</h2.version>
+        <h2.version>2.5.252</h2.version>
         <openapi.version>3.1.1</openapi.version>
         <mockito.version>5.17.0</mockito.version>
     </properties>
@@ -96,10 +96,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat-runtime</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Validators for @Min, @Max, ... -->
