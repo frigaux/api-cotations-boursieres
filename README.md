@@ -10,13 +10,14 @@
     - spring-security-oauth2-resource-server 7.1.1 (APIs via OAuth 2.0 Bearer Tokens)
     - spring-security-oauth2-jose 7.1.1 (Javascript Object Signing and Encryption : JSON Web Token, JSON Web Signature, JSON Web Encryption, JSON Web Key)
 - springdoc-openapi-starter-webmvc-ui 3.1.1
-- kotlin 2.4.20
+- kotlin 2.4.21
   - kotlin-stdlib
   - kotlin-reflect
   - kotlin-test-junit5
 - kotlin-logging-jvm 3.0.5
 - dépendance JPA
-- mysql 8.0.36 + H2 2.5.252 (tests)
+- mysql 8.0.36, mysql-connector-j 9.7.0
+- H2 2.5.252 (tests)
 
 # Spring Security : OAuth 2.0 Resource Server JWT
 [OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
