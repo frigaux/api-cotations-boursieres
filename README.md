@@ -1,20 +1,22 @@
 # Exemple d'API combinant Spring Boot Web et Kotlin
-- spring-boot-starter-parent 3.4.1
-  - spring-boot-starter-web
+- spring-boot-starter-parent 4.1.1
+  - spring-boot-starter-webmvc
+  - spring-boot-starter-webmvc-test
+  - spring-boot-starter-tomcat-runtime
+  - spring-boot-starter-actuator
   - spring-boot-starter-validation (annotations correspondant aux contraintes pour la validation des données)
-  - spring-boot-starter-test
   - spring-boot-starter-cache
-  - spring-boot-starter-security (spring-security-config 6.4.2 et spring-security-web 6.4.2)
-    - spring-security-oauth2-resource-server 6.4.2 (APIs via OAuth 2.0 Bearer Tokens)
-    - spring-security-oauth2-jose 6.4.2 (Javascript Object Signing and Encryption : JSON Web Token, JSON Web Signature, JSON Web Encryption, JSON Web Key)
-- springdoc-openapi-starter-webmvc-ui 2.8.5
-- kotlin 2.1.0
+  - spring-boot-starter-security (spring-security-config 7.1.1 et spring-security-web 7.1.1)
+    - spring-security-oauth2-resource-server 7.1.1 (APIs via OAuth 2.0 Bearer Tokens)
+    - spring-security-oauth2-jose 7.1.1 (Javascript Object Signing and Encryption : JSON Web Token, JSON Web Signature, JSON Web Encryption, JSON Web Key)
+- springdoc-openapi-starter-webmvc-ui 3.1.1
+- kotlin 2.4.20
   - kotlin-stdlib
   - kotlin-reflect
   - kotlin-test-junit5
 - kotlin-logging-jvm 3.0.5
 - dépendance JPA
-- mysql 8.0.36 + H2 2.3.232 (tests)
+- mysql 8.0.36 + H2 2.5.252 (tests)
 
 # Spring Security : OAuth 2.0 Resource Server JWT
 [OAuth 2.0 Resource Server JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html)
