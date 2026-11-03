@@ -232,16 +232,5 @@ class ConfigurationTest(
         repositoryStepExecution.save(step4);
         repositoryJobExecutionParam.save(params1);
         repositoryJobExecutionParam.save(params2);
-
-//        val params1 = JobExecutionParams("date", "java.time.LocalDate", "2026-10-20", 'Y', null);
-//        val step1 = StepExecution(1, "stepRecupererAbcLibelles", OffsetDateTime.now(), OffsetDateTime.now(), OffsetDateTime.now(), "COMPLETED", 1, 0, 0, 0, 0, 0, 0, 0, "COMPLETED", "", OffsetDateTime.now(), null, Collections.emptySet());
-//        val step2 = StepExecution(1, "stepPersisterAbcLibelles", OffsetDateTime.now(), OffsetDateTime.now(), OffsetDateTime.now(), "COMPLETED", 34, 355, 0, 355, 0, 0, 0, 0, "COMPLETED", "", OffsetDateTime.now(), null, Collections.emptySet());
-//        val execution1 = JobExecution(1, OffsetDateTime.now(), OffsetDateTime.now(), OffsetDateTime.now(), "COMPLETED", "COMPLETED", "", OffsetDateTime.now(), null, Collections.emptySet(), setOf(params1), setOf(step1, step2));
-//        params1.jobExecution = execution1;
-//        step1.jobExecution = execution1;
-//        step2.jobExecution = execution1;
-//        val job1 = JobInstance(1, "jobMajAbcLibelles", "jobMajAbcLibelles", setOf(execution1));
-//        execution1.jobInstance = job1;
-//        repositoryJobInstance.save(job1);
     }
 }
