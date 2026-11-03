@@ -1,7 +1,7 @@
 package fr.fabien.api.cotations;
 
 import com.nimbusds.jose.shaded.gson.Gson;
-import fr.fabien.api.cotations.restcontroller.dto.DtoAlerte;
+import fr.fabien.api.cotations.restcontroller.dto.alertes.DtoAlerte;
 import fr.fabien.jpa.cotations.enumerations.TypeAlerte;
 import fr.fabien.jpa.cotations.enumerations.TypeNotification;
 import org.junit.jupiter.api.MethodOrderer;

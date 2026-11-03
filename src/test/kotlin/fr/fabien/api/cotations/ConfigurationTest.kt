@@ -9,15 +9,31 @@ import fr.fabien.jpa.cotations.enumerations.TypeNotification
 import fr.fabien.jpa.cotations.repository.RepositoryAlerte
 import fr.fabien.jpa.cotations.repository.RepositoryCours
 import fr.fabien.jpa.cotations.repository.RepositoryValeur
+import fr.fabien.jpa.springbatch.entities.JobExecution
+import fr.fabien.jpa.springbatch.entities.JobExecutionParam
+import fr.fabien.jpa.springbatch.entities.JobInstance
+import fr.fabien.jpa.springbatch.entities.StepExecution
+import fr.fabien.jpa.springbatch.repositories.RepositoryJobExecution
+import fr.fabien.jpa.springbatch.repositories.RepositoryJobExecutionParam
+import fr.fabien.jpa.springbatch.repositories.RepositoryJobInstance
+import fr.fabien.jpa.springbatch.repositories.RepositoryStepExecution
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.util.*
 
 @Configuration
+@EnableJpaRepositories("fr.fabien.jpa")
 class ConfigurationTest(
     @Autowired private val repositoryValeur: RepositoryValeur,
     @Autowired private val repositoryCours: RepositoryCours,
-    @Autowired private val repositoryAlerte: RepositoryAlerte
+    @Autowired private val repositoryAlerte: RepositoryAlerte,
+    @Autowired private val repositoryJobInstance: RepositoryJobInstance,
+    @Autowired private val repositoryJobExecution: RepositoryJobExecution,
+    @Autowired private val repositoryStepExecution: RepositoryStepExecution,
+    @Autowired private val repositoryJobExecutionParam: RepositoryJobExecutionParam
 ) {
     companion object {
         val TICKER_GLE = "GLE"
@@ -30,6 +46,7 @@ class ConfigurationTest(
         saveValeurs()
         saveCours()
         saveAlertes()
+        saveJobs()
     }
 
     private fun saveValeurs() {
@@ -85,5 +102,146 @@ class ConfigurationTest(
                 TypeNotification.SYSTEME
             )
         )
+    }
+
+    private fun saveJobs() {
+        val job1 = JobInstance(1, "jobMajAbcLibelles", "jobMajAbcLibelles", Collections.emptySet());
+        val job2 = JobInstance(1, "jobMajAbcCotations", "jobMajAbcCotations", Collections.emptySet());
+        val execution1 = JobExecution(
+            1,
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            "COMPLETED",
+            "COMPLETED",
+            "",
+            OffsetDateTime.now(),
+            job1,
+            Collections.emptySet(),
+            Collections.emptySet(),
+            Collections.emptySet()
+        );
+        val execution2 = JobExecution(
+            1,
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            "COMPLETED",
+            "COMPLETED",
+            "",
+            OffsetDateTime.now(),
+            job2,
+            Collections.emptySet(),
+            Collections.emptySet(),
+            Collections.emptySet()
+        );
+        val step1 = StepExecution(
+            1,
+            "stepRecupererAbcLibelles",
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            "COMPLETED",
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "COMPLETED",
+            "",
+            OffsetDateTime.now(),
+            execution1,
+            Collections.emptySet()
+        );
+        val step2 = StepExecution(
+            1,
+            "stepPersisterAbcLibelles",
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            "COMPLETED",
+            34,
+            355,
+            0,
+            355,
+            0,
+            0,
+            0,
+            0,
+            "COMPLETED",
+            "",
+            OffsetDateTime.now(),
+            execution1,
+            Collections.emptySet()
+        );
+        val step3 = StepExecution(
+            1,
+            "stepRecupererAbcCotations",
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            "COMPLETED",
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "COMPLETED",
+            "",
+            OffsetDateTime.now(),
+            execution2,
+            Collections.emptySet()
+        );
+        val step4 = StepExecution(
+            1,
+            "stepPersisterAbcCotations",
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            OffsetDateTime.now(),
+            "COMPLETED",
+            31,
+            300,
+            0,
+            300,
+            0,
+            0,
+            0,
+            0,
+            "COMPLETED",
+            "",
+            OffsetDateTime.now(),
+            execution2,
+            Collections.emptySet()
+        );
+        val params1 = JobExecutionParam("date", "java.time.LocalDate", "2026-10-20", 'Y', execution1);
+        val params2 = JobExecutionParam("date", "java.time.LocalDate", "2026-10-20", 'Y', execution2);
+
+        repositoryJobInstance.save(job1);
+        repositoryJobInstance.save(job2);
+        repositoryJobExecution.save(execution1);
+        repositoryJobExecution.save(execution2);
+        repositoryStepExecution.save(step1);
+        repositoryStepExecution.save(step2);
+        repositoryStepExecution.save(step3);
+        repositoryStepExecution.save(step4);
+        repositoryJobExecutionParam.save(params1);
+        repositoryJobExecutionParam.save(params2);
+
+//        val params1 = JobExecutionParams("date", "java.time.LocalDate", "2026-10-20", 'Y', null);
+//        val step1 = StepExecution(1, "stepRecupererAbcLibelles", OffsetDateTime.now(), OffsetDateTime.now(), OffsetDateTime.now(), "COMPLETED", 1, 0, 0, 0, 0, 0, 0, 0, "COMPLETED", "", OffsetDateTime.now(), null, Collections.emptySet());
+//        val step2 = StepExecution(1, "stepPersisterAbcLibelles", OffsetDateTime.now(), OffsetDateTime.now(), OffsetDateTime.now(), "COMPLETED", 34, 355, 0, 355, 0, 0, 0, 0, "COMPLETED", "", OffsetDateTime.now(), null, Collections.emptySet());
+//        val execution1 = JobExecution(1, OffsetDateTime.now(), OffsetDateTime.now(), OffsetDateTime.now(), "COMPLETED", "COMPLETED", "", OffsetDateTime.now(), null, Collections.emptySet(), setOf(params1), setOf(step1, step2));
+//        params1.jobExecution = execution1;
+//        step1.jobExecution = execution1;
+//        step2.jobExecution = execution1;
+//        val job1 = JobInstance(1, "jobMajAbcLibelles", "jobMajAbcLibelles", setOf(execution1));
+//        execution1.jobInstance = job1;
+//        repositoryJobInstance.save(job1);
     }
 }

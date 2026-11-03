@@ -1,4 +1,4 @@
-package fr.fabien.api.cotations.restcontroller.dto;
+package fr.fabien.api.cotations.restcontroller.dto.alertes;
 
 import fr.fabien.jpa.cotations.entities.Alerte;
 import fr.fabien.jpa.cotations.entities.Valeur;

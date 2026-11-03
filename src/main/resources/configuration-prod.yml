@@ -16,9 +16,19 @@ business:
     username: ${APP_DATASOURCE_USERNAME}
     password: ${APP_DATASOURCE_PASSWORD}
     driver-class-name: "com.mysql.cj.jdbc.Driver"
-    max-total: 30
-    configuration:
-      maximum-pool-size: 30
+    connection-pool:
+      connection-timeout: 3000
+      maximum-pool-size: 5
+
+job-repository:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/job_repository"
+    username: ${APP_DATASOURCE_USERNAME}
+    password: ${APP_DATASOURCE_PASSWORD}
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+    connection-pool:
+      connection-timeout: 3000
+      maximum-pool-size: 5
 
 # JPA with hibernate
 spring:

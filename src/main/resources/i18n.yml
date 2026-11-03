@@ -99,6 +99,15 @@ api:
         response:
           204: "L'alerte a été supprimée"
           404: "Alerte introuvable"
+  jobs:
+    name: "API des jobs"
+    operation:
+      derniereExecution:
+        summary: "Récupère les dernières exécutions de plusieurs jobs identifiés par leur nom"
+        parameter:
+          jobNames: "noms identifiant les jobs"
+        response:
+          200: "Les exécutions"
 
 dto:
   DtoAuthentification:
@@ -176,6 +185,36 @@ dto:
     description: "Une alerte avec son identifiant."
     field:
       id: "l'identifiant"
+  DtoJobInstance:
+    description: "Un job."
+    field:
+      nom: "le nom du job"
+      executions: "les exécutions"
+  DtoJobExecution:
+    description: "Une exécution d'un job."
+    field:
+      creation: "création"
+      debut: "début"
+      fin: "fin"
+      statut: "statut"
+      message: "message"
+      parametres: "les parametres"
+      etapes: "les étapes"
+  DtoJobExecutionParam:
+    description: "Un paramètre d'une exécution."
+    field:
+      nom: "le nom du paramètre"
+      type: "le type"
+      valeur: "la valeur"
+  DtoStepExecution:
+    description: "Une étape d'une exécution."
+    field:
+      nom: "le nom de l'étape"
+      creation: "création"
+      debut: "début"
+      fin: "fin"
+      statut: "statut"
+      message: "message"
   DtoErreurHttp:
     description: "Description d'une erreur HTTP."
     field:

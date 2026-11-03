@@ -3,6 +3,13 @@
 logging:
   config: "classpath:logback-dev.xml"
 
+# https://docs.spring.io/spring-boot/reference/actuator/endpoints.html#actuator.endpoints.exposing
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans, env, health
+
 # Datasources
 # https://docs.spring.io/spring-boot/reference/data/sql.html#data.sql.datasource.configuration
 # https://docs.spring.io/spring-boot/how-to/data-access.html
@@ -12,9 +19,19 @@ business:
     username: fabien
     password: password
     driver-class-name: "com.mysql.cj.jdbc.Driver"
-    max-total: 30
-    configuration:
-      maximum-pool-size: 30
+    connection-pool:
+      connection-timeout: 3000
+      maximum-pool-size: 5
+
+job-repository:
+  datasource:
+    url: "jdbc:mysql://localhost:3306/job_repository"
+    username: fabien
+    password: password
+    driver-class-name: "com.mysql.cj.jdbc.Driver"
+    connection-pool:
+      connection-timeout: 3000
+      maximum-pool-size: 5
 
 # JPA with hibernate
 spring:

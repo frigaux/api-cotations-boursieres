@@ -1,4 +1,4 @@
-package fr.fabien.api.cotations.restcontroller.dto;
+package fr.fabien.api.cotations.restcontroller.dto.alertes;
 
 import fr.fabien.jpa.cotations.entities.Alerte;
 import io.swagger.v3.oas.annotations.media.Schema;

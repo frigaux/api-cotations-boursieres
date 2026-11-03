@@ -31,6 +31,7 @@
         <kotlin.version>2.4.21</kotlin.version>
 
         <jpa.cotations.version>0.0.1-SNAPSHOT</jpa.cotations.version>
+        <jpa.spring.batch>0.0.1-SNAPSHOT</jpa.spring.batch>
         <jupiter.version>6.0.3</jupiter.version>
         <kotlin.logging.version>3.0.5</kotlin.logging.version>
         <mysql.version>9.7.0</mysql.version>
@@ -51,6 +52,11 @@
             <groupId>fr.fabien</groupId>
             <artifactId>jpa-cotations-boursieres</artifactId>
             <version>${jpa.cotations.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>fr.fabien</groupId>
+            <artifactId>jpa-spring-batch</artifactId>
+            <version>${jpa.spring.batch}</version>
         </dependency>
 
         <!-- Kotlin standard library. -->

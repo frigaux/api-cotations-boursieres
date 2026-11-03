@@ -1,7 +1,7 @@
 package fr.fabien.api.cotations.restcontroller;
 
-import fr.fabien.api.cotations.restcontroller.dto.DtoAlerte;
-import fr.fabien.api.cotations.restcontroller.dto.DtoAlerteAvecId;
+import fr.fabien.api.cotations.restcontroller.dto.alertes.DtoAlerte;
+import fr.fabien.api.cotations.restcontroller.dto.alertes.DtoAlerteAvecId;
 import fr.fabien.api.cotations.restcontroller.exceptions.handlers.DtoErreurHttp;
 import fr.fabien.api.cotations.service.ServiceAlertes;
 import io.swagger.v3.oas.annotations.Operation;
