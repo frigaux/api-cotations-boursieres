@@ -102,7 +102,7 @@ api:
   jobs:
     name: "API des jobs"
     operation:
-      derniereExecution:
+      dernieresExecutions:
         summary: "Récupère les dernières exécutions de plusieurs jobs identifiés par leur nom"
         parameter:
           jobNames: "noms identifiant les jobs"

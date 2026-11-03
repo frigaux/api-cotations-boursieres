@@ -33,11 +33,11 @@ public class RestControllerJobs {
     @Autowired
     private ServiceJobs serviceJobs;
 
-    @Operation(summary = "${api.jobs.operation.derniereExecution.summary}")
+    @Operation(summary = "${api.jobs.operation.dernieresExecutions.summary}")
     @ApiResponses(
             value = {
                     @ApiResponse(
-                            responseCode = "200", description = "${api.jobs.operation.derniereExecution.response[200]}",
+                            responseCode = "200", description = "${api.jobs.operation.dernieresExecutions.response[200]}",
                             content = {
                                     @Content(
                                             mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -48,13 +48,13 @@ public class RestControllerJobs {
             }
     )
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    private List<DtoJobInstance> derniereExecution(
+    private List<DtoJobInstance> dernieresExecutions(
             @Parameter(
-                    description = "${api.jobs.operation.derniereExecution.parameter.jobNames}",
+                    description = "${api.jobs.operation.dernieresExecutions.parameter.jobNames}",
                     required = true,
                     example = "jobMajAbcLibelles, jobMajAbcCotations, jobMajBoursoramaCours, jobConvertirEnValeurCours, jobCalculerMoyennes"
             )
             @RequestParam Set<String> jobNames) {
-        return serviceJobs.derniereExecution(jobNames);
+        return serviceJobs.dernieresExecutions(jobNames);
     }
 }

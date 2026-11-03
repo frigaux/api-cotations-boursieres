@@ -14,7 +14,7 @@ public class ServiceJobs {
     @Autowired
     private RepositoryJobInstance repositoryJobInstance;
 
-    public List<DtoJobInstance> derniereExecution(Set<String> jobNames) {
+    public List<DtoJobInstance> dernieresExecutions(Set<String> jobNames) {
         return repositoryJobInstance.findLastJobsByName(jobNames, Limit.of(jobNames.size()))
                 .stream()
                 .map(DtoJobInstance::new)
