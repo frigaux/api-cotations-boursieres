@@ -1,5 +1,6 @@
 package fr.fabien.api.cotations.restcontroller.dto.jobs;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.fabien.jpa.springbatch.entities.StepExecution;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.format.DateTimeFormatter;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(description = "${dto.DtoStepExecution.description}")
 public class DtoStepExecution {
     @Schema(description = "${dto.DtoStepExecution.field.nom}", example = "stepRecupererAbcLibelles", requiredMode = Schema.RequiredMode.REQUIRED)

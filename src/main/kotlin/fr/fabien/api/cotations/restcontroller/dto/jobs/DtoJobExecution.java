@@ -1,5 +1,6 @@
 package fr.fabien.api.cotations.restcontroller.dto.jobs;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.fabien.jpa.springbatch.entities.JobExecution;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.Size;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(description = "${dto.DtoJobExecution.description}")
 public class DtoJobExecution {
     @Schema(description = "${dto.DtoJobExecution.field.creation}", example = "2025-06-23T17:38:10.870063Z", requiredMode = Schema.RequiredMode.REQUIRED)
